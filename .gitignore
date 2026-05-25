@@ -1,0 +1,29 @@
+# Gradle
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+
+# Kotlin
+*.ktl
+
+# Spring Boot / Logs
+*.log
+log/
+logs/
+
+# Application config (local overrides)
+application-*.yml
+application-*.properties
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+*.tmp
+*.bak
