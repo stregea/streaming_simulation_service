@@ -19,19 +19,19 @@ public interface Simulator {
      *
      * @return a {@link GameEvent} object containing new event information.
      */
-    public GameEvent generateEvent();
+    GameEvent generateEvent();
 
     /**
      * Generate a list of {@link EventType} for the sport to be inserted within a {@link GameEvent}.
      *
      * @return a list of {@link EventType}.
      */
-    public List<EventType> getEventTypes();
+    List<EventType> getEventTypes();
 
     /**
      * Generate a simulated payload to be inserted within a {@link GameEvent}.
      *
      * @return a Map containing sports data.
      */
-    public Map<String, Object> generatePayload();
+    Map<String, Object> generatePayload();
 }
