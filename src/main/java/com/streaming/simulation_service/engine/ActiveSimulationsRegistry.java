@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
-public class ActiveGamesRegistry {
+public class ActiveSimulationsRegistry {
 
     /**
      * The ConcurrentHashMap that will serve as the primary registry of all active games.
