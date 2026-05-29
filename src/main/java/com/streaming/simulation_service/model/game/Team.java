@@ -3,7 +3,7 @@ package com.streaming.simulation_service.model.game;
 import java.util.List;
 
 /**
- * Record that will represent a Team within a Game.
+ * Record that will represent a {@code Team} within a Game.
  *
  * @param id      The ID of the team.
  * @param name    The name of the team.

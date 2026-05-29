@@ -3,7 +3,7 @@ package com.streaming.simulation_service.model.game;
 import com.streaming.simulation_service.model.enums.Sport;
 
 /**
- * Record that will represent a Game.
+ * Record that will represent a {@code Game}.
  *
  * @param id       The ID of the game.
  * @param sport    The sport of the game.
