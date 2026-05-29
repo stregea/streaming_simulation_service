@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Class that will serve as the registry of all simulations occurring.
+ */
 @Component
 public class ActiveSimulationsRegistry {
 
