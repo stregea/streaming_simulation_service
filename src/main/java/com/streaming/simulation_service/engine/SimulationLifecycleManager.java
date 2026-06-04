@@ -4,9 +4,6 @@ import com.streaming.simulation_service.model.state.SimulationGameState;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.concurrent.ThreadLocalRandom;
-
 /**
  * Manages the lifecycle of all simulated games within the {@link ActiveGamesRegistry}.
  * <p>
@@ -49,7 +46,7 @@ public class SimulationLifecycleManager {
      * TODO: Extract max game count to application configuration.
      *
      * @see #createRandomGame()
-     * @see ActiveGamesRegistry#addGame(String, SimulationGameState)
+     * @see ActiveGamesRegistry#addGame(SimulationGameState)
      */
     @PostConstruct
     private void bootStrapGames() {
@@ -57,7 +54,7 @@ public class SimulationLifecycleManager {
         for (int i = 0; i < 5; i++) {
             SimulationGameState gameState = createRandomGame();
             if (gameState != null) {
-                registry.addGame(gameState.getGame().id(), gameState);
+                registry.addGame(gameState);
             }
         }
     }
@@ -70,25 +67,14 @@ public class SimulationLifecycleManager {
     public void replaceGame(SimulationGameState gameState) {
         if (gameState != null) {
             // Remove previous game simulation from the registry.
-            registry.removeGame(gameState.getGame().id());
+            registry.removeGame(gameState);
 
             // Create a new game.
             SimulationGameState newGameState = createRandomGame();
 
             // Add the new game to the registry.
-            registry.addGame(gameState.getGame().id(), newGameState);
+            registry.addGame(newGameState);
         }
-    }
-
-    /**
-     * Select a random game from the {@link ActiveGamesRegistry}.
-     *
-     * @return A randomly selected {@link SimulationGameState} object.
-     */
-    public SimulationGameState getRandomGame() {
-        Collection<SimulationGameState> activeGames = registry.getActiveGames();
-        int randomIndex = ThreadLocalRandom.current().nextInt(activeGames.size());
-        return activeGames.stream().toList().get(randomIndex);
     }
 
     /**

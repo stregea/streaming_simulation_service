@@ -4,10 +4,13 @@ import com.streaming.simulation_service.model.state.SimulationGameState;
 import com.streaming.simulation_service.model.game.Game;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Class that will serve as the registry of all simulations occurring.
@@ -40,22 +43,38 @@ public class ActiveGamesRegistry {
     }
 
     /**
+     * Select a random active game from the registry.
+     *
+     * @return An {@link Optional} containing a randomly selected {@link SimulationGameState}
+     * or Optional.empty() if no active games exist.
+     */
+    public Optional<SimulationGameState> getRandomGame() {
+        List<SimulationGameState> games = new ArrayList<>(getActiveGames());
+
+        if (games.isEmpty()) {
+            return Optional.empty();
+        }
+
+        int randomIndex = ThreadLocalRandom.current().nextInt(games.size());
+        return Optional.of(games.get(randomIndex));
+    }
+
+    /**
      * Add a new {@link SimulationGameState} to the registry of active games.
      *
-     * @param gameId    The id of the {@link Game} to add to the registry.
      * @param gameState The {@link SimulationGameState} object representing the current state of a {@link Game}.
      */
-    public void addGame(String gameId, SimulationGameState gameState) {
-        activeGames.put(gameId, gameState);
+    public void addGame(SimulationGameState gameState) {
+        activeGames.put(gameState.getGame().id(), gameState);
     }
 
     /**
      * Remove a {@link SimulationGameState} from the registry of active games.
      *
-     * @param gameId The id of the {@link Game} within the {@link SimulationGameState} to be removed from the registry.
+     * @param gameState The {@link SimulationGameState} to be removed from the registry.
      */
-    public void removeGame(String gameId) {
-        activeGames.remove(gameId);
+    public void removeGame(SimulationGameState gameState) {
+        activeGames.remove(gameState.getGame().id());
     }
 
 }

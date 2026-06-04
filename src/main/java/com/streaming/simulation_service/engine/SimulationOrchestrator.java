@@ -4,15 +4,22 @@ import com.streaming.simulation_service.model.state.SimulationGameState;
 import org.springframework.stereotype.Component;
 
 /**
- * The Orchestrator behind the simulation of all games. This class communicates with the {@link SimulationLifecycleManager}
- * to help manage the game states as well as communicating with the {@link SimulationEngine} to generate events for randomly selected games.
+ * The Orchestrator behind the simulation of all games. This class communicates with the {@link ActiveGamesRegistry} and
+ * {@link SimulationLifecycleManager} to help manage the game states as well as communicating with the {@link SimulationEngine}
+ * to generate events for randomly selected games.
  *
  * @see SimulationRunner
+ * @see ActiveGamesRegistry
  * @see SimulationLifecycleManager
  * @see SimulationEngine
  */
 @Component
 public class SimulationOrchestrator {
+
+    /**
+     * Registry that contains all active {@link SimulationGameState}'s within the simulation.
+     */
+    private final ActiveGamesRegistry registry;
 
     /**
      * Object which will manage the lifecycle of games being simulated.
@@ -30,13 +37,13 @@ public class SimulationOrchestrator {
      * @param lifecycleManager the {@link SimulationLifecycleManager} for managing game lifecycle.
      * @param engine           the {@link SimulationEngine} for generating events.
      */
-    public SimulationOrchestrator(SimulationLifecycleManager lifecycleManager, SimulationEngine engine) {
+    public SimulationOrchestrator(ActiveGamesRegistry registry, SimulationLifecycleManager lifecycleManager, SimulationEngine engine) {
+        this.registry = registry;
         this.lifecycleManager = lifecycleManager;
         this.engine = engine;
     }
 
     /**
-     * TODO
      * Orchestrates the overall simulation process by:
      * <ul>
      *   <li>Selecting a random active game from the lifecycle manager</li>
@@ -47,15 +54,24 @@ public class SimulationOrchestrator {
      * This method is called periodically by the {@link SimulationRunner}.
      *
      * @see SimulationRunner#tick()
-     * @see SimulationLifecycleManager#getRandomGame()
+     * @see ActiveGamesRegistry#getRandomGame()
      * @see SimulationEngine#simulateEvent(SimulationGameState)
+     * @see SimulationLifecycleManager#replaceGame(SimulationGameState)
      */
     public void simulate() {
         System.out.println("Simulating games...");
 
-        // todo: bootstrap games, then uncomment.
-//        SimulationGameState game = lifecycleManager.getRandomGame();
-//
-//        engine.simulateEvent(game);
+        SimulationGameState game = registry.getRandomGame().orElse(null);
+
+        if (game == null) {
+            System.out.println("No active games found to simulate.");
+            return;
+        }
+
+        engine.simulateEvent(game);
+
+        if (game.isGameOver()) {
+            lifecycleManager.replaceGame(game);
+        }
     }
 }
