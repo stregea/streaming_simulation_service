@@ -1,5 +1,6 @@
 package com.streaming.simulation_service.simulators;
 
+import com.streaming.simulation_service.model.enums.Sport;
 import com.streaming.simulation_service.model.event.EventType;
 import com.streaming.simulation_service.model.event.GameEvent;
 import com.streaming.simulation_service.model.state.SimulationGameState;
@@ -13,8 +14,16 @@ import java.util.Map;
  * @see SimulationGameState
  * @see GameEvent
  * @see EventType
+ * @see Sport
  */
 public interface Simulator {
+
+    /**
+     * Get the {@link Sport} associated with the simulator.
+     *
+     * @return the {@link Sport} that this simulator handles
+     */
+    Sport getSport();
 
     /**
      * Generate a new game event based on the current sport being played.

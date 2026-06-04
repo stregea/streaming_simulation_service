@@ -27,6 +27,16 @@ import java.util.UUID;
 public class SoccerSimulator implements Simulator {
 
     /**
+     * Get the sport handled by this simulator.
+     *
+     * @return the {@link Sport#SOCCER} enum value
+     */
+    @Override
+    public Sport getSport() {
+        return Sport.SOCCER;
+    }
+
+    /**
      * Generate a soccer event for the given game state.
      * <p>
      * Creates a unique event with:
