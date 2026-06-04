@@ -1,29 +1,52 @@
 package com.streaming.simulation_service.engine;
 
 import com.streaming.simulation_service.model.event.GameEvent;
+import com.streaming.simulation_service.model.state.SimulationGameState;
 import com.streaming.simulation_service.simulators.Simulator;
-import com.streaming.simulation_service.simulators.soccer.SoccerSimulator;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
+/**
+ * Called by the {@link SimulationOrchestrator}, this class serves as the primary engine to generate {@link GameEvent}'s for randomly
+ * selected {@link SimulationGameState}'s. The engine selects a {@link Simulator} that will then generate sport-specific event to
+ * publish to Kafka.
+ *
+ * @see SimulationOrchestrator
+ * @see GameEvent
+ * @see SimulationGameState
+ * @see Simulator
+ */
 @Component
 public class SimulationEngine {
-    // todo
-    private final List<Simulator> simulators = List.of(
-            new SoccerSimulator() // Add the soccer simulator
-    );
 
-    public void simulate() {
-        // select a random simulator and generate an event.
-        Simulator simulator = simulators.get((int) (Math.random() * simulators.size()));
+    /**
+     * Object that will select the correct {@link Simulator} based on the sport being simulated.
+     */
+    private final SimulatorFactory simulatorFactory;
 
-        GameEvent event = simulator.generateEvent();
-
-        // publish event to kafka
-        System.out.println("Generated event: " + event);
+    /**
+     * Construct a new {@code SimulationEngine}.
+     *
+     * @param simulatorFactory the {@link SimulatorFactory} for retrieving sport-specific simulators
+     */
+    public SimulationEngine(SimulatorFactory simulatorFactory) {
+        this.simulatorFactory = simulatorFactory;
     }
-    // contains a list of simulators
-    // randomly selects a simulator to generate and return an event
-    // publishes events to kafka
+
+    /**
+     * Randomly simulate a game event for a given {@link SimulationGameState} by selecting a random {@link Simulator} from the injected list of simulators and using it to generate an event.
+     * The generated event is then published to Kafka.
+     *
+     * @param game The {@link SimulationGameState} to generate a game event for.
+     */
+    public void simulateEvent(SimulationGameState game) {
+        // Select the appropriate simulator from the SimulatorFactory.
+//        Simulator simulator = simulatorFactory.getSimulator(game.getSport());
+//        System.out.println("Selected simulator: " + simulator.getClass().getSimpleName() + " for sport: " + game.getSport());
+
+        // Generate an event
+//        GameEvent event = simulator.generateEvent(game);
+//        System.out.println("Generated event: " + event);
+
+        // todo: publish event to kafka
+    }
 }
