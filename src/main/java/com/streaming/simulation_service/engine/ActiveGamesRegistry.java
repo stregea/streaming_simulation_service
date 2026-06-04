@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Class that will serve as the registry of all simulations occurring.
  */
 @Component
-public class ActiveSimulationsRegistry {
+public class ActiveGamesRegistry {
 
     /**
      * The ConcurrentHashMap that will serve as the primary registry of all active games.

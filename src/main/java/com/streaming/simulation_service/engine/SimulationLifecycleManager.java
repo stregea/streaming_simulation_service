@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Manages the lifecycle of all simulated games within the {@link ActiveSimulationsRegistry}.
+ * Manages the lifecycle of all simulated games within the {@link ActiveGamesRegistry}.
  * <p>
  * Responsibilities include:
  * <ul>
@@ -17,7 +17,7 @@ import java.util.concurrent.ThreadLocalRandom;
  *   <li>Replacing completed or expired games with new ones</li>
  * </ul>
  *
- * @see ActiveSimulationsRegistry
+ * @see ActiveGamesRegistry
  * @see SimulationGameState
  */
 @Component
@@ -29,14 +29,14 @@ public class SimulationLifecycleManager {
     /**
      * Registry that contains all active {@link SimulationGameState}'s within the simulation.
      */
-    private final ActiveSimulationsRegistry registry;
+    private final ActiveGamesRegistry registry;
 
     /**
      * Construct a new {@code SimulationLifecycleManager}.
      *
-     * @param registry the {@link ActiveSimulationsRegistry} to manage active games
+     * @param registry the {@link ActiveGamesRegistry} to manage active games
      */
-    public SimulationLifecycleManager(ActiveSimulationsRegistry registry) {
+    public SimulationLifecycleManager(ActiveGamesRegistry registry) {
         this.registry = registry;
     }
 
@@ -44,12 +44,12 @@ public class SimulationLifecycleManager {
      * Bootstrap initial games into the registry on application startup.
      * <p>
      * Invoked automatically by Spring via {@code @PostConstruct}. Creates 5 randomly
-     * generated games and adds them to the {@link ActiveSimulationsRegistry} for simulation.
+     * generated games and adds them to the {@link ActiveGamesRegistry} for simulation.
      * <p>
      * TODO: Extract max game count to application configuration.
      *
      * @see #createRandomGame()
-     * @see ActiveSimulationsRegistry#addGame(String, SimulationGameState)
+     * @see ActiveGamesRegistry#addGame(String, SimulationGameState)
      */
     @PostConstruct
     private void bootStrapGames() {
@@ -63,7 +63,7 @@ public class SimulationLifecycleManager {
     }
 
     /**
-     * Replace a game within the {@link ActiveSimulationsRegistry}.
+     * Replace a game within the {@link ActiveGamesRegistry}.
      *
      * @param gameState The {@link SimulationGameState} to replace.
      */
@@ -81,7 +81,7 @@ public class SimulationLifecycleManager {
     }
 
     /**
-     * Select a random game from the {@link ActiveSimulationsRegistry}.
+     * Select a random game from the {@link ActiveGamesRegistry}.
      *
      * @return A randomly selected {@link SimulationGameState} object.
      */
