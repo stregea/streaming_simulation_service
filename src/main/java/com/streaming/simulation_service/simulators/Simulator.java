@@ -2,6 +2,7 @@ package com.streaming.simulation_service.simulators;
 
 import com.streaming.simulation_service.model.event.EventType;
 import com.streaming.simulation_service.model.event.GameEvent;
+import com.streaming.simulation_service.model.state.SimulationGameState;
 
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import java.util.Map;
 /**
  * Defines the contract for sport-specific game event simulators.
  *
+ * @see SimulationGameState
  * @see GameEvent
  * @see EventType
  */
@@ -17,9 +19,10 @@ public interface Simulator {
     /**
      * Generate a new game event based on the current sport being played.
      *
+     * @param gameState the {@link SimulationGameState} to generate an event for.
      * @return a {@link GameEvent} object containing new event information.
      */
-    GameEvent generateEvent();
+    GameEvent generateEvent(SimulationGameState gameState);
 
     /**
      * Generate a list of {@link EventType} for the sport to be inserted within a {@link GameEvent}.
