@@ -59,14 +59,14 @@ public class SimulationOrchestrator {
      * @see SimulationLifecycleManager#replaceGame(SimulationGameState)
      */
     public void simulate() {
-        System.out.println("Simulating games...");
-
         SimulationGameState game = registry.getRandomGame().orElse(null);
 
         if (game == null) {
             System.out.println("No active games found to simulate.");
             return;
         }
+
+        System.out.printf("Simulating game %s | sport %s...%n", game.getGame().id(), game.getGame().sport());
 
         engine.simulateEvent(game);
 
