@@ -1,13 +1,15 @@
 package com.streaming.simulation_service.model.game;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Record that will represent a {@code Team} within a Game.
  *
- * @param id      The ID of the team.
+ * @param id      The {@link UUID} of the team.
  * @param name    The name of the team.
  * @param players The list of {@link Player}'s that belong to the team.
  * @see Player
  */
-public record Team(String id, String name, List<Player> players) {}
+public record Team(UUID id, String name, List<Player> players) {
+}
