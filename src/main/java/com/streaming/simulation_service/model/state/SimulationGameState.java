@@ -63,20 +63,17 @@ public class SimulationGameState {
      * Create a fully-populated {@code SimulationGameState}.
      *
      * @param game               the {@link Game} this state belongs to
-     * @param sport              the sport being simulated
      * @param actingTeam         the team currently acting (may differ from the team with possession)
      * @param gameOver           whether the game has ended
      * @param remainingSeconds   remaining seconds in the current period (nullable)
      * @param lastEventTimestamp timestamp of the last generated event (nullable)
      */
     public SimulationGameState(Game game,
-                               Sport sport,
                                Team actingTeam,
                                boolean gameOver,
                                Integer remainingSeconds,
                                Instant lastEventTimestamp) {
         this.game = game;
-        this.sport = sport;
         this.actingTeam = actingTeam;
         this.gameOver = gameOver;
         this.remainingSeconds = remainingSeconds;
@@ -101,24 +98,6 @@ public class SimulationGameState {
      */
     public void setGame(Game game) {
         this.game = game;
-    }
-
-    /**
-     * Returns the sport of this game.
-     *
-     * @return sport
-     */
-    public Sport getSport() {
-        return sport;
-    }
-
-    /**
-     * Set the sport for this simulated game state.
-     *
-     * @param sport non-null sport enum
-     */
-    public void setSport(Sport sport) {
-        this.sport = sport;
     }
 
     /**

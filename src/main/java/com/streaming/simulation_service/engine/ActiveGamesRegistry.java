@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -21,7 +22,7 @@ public class ActiveGamesRegistry {
     /**
      * The ConcurrentHashMap that will serve as the primary registry of all active games.
      */
-    private final Map<String, SimulationGameState> activeGames = new ConcurrentHashMap<>();
+    private final Map<UUID, SimulationGameState> activeGames = new ConcurrentHashMap<>();
 
     /**
      * Get a {@link Collection} of all active games being run within the simulation.

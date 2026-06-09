@@ -16,6 +16,6 @@ import java.util.UUID;
  * @param timestamp - The time in which the event occurred.
  * @param payload   - The payload that contains other sport-specific data.
  */
-public record GameEvent(UUID id, String gameId, Sport sport, String eventType, Instant timestamp,
+public record GameEvent(UUID id, UUID gameId, Sport sport, String eventType, Instant timestamp,
                         Map<String, Object> payload) {
 }

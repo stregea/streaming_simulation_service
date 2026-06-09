@@ -51,7 +51,7 @@ public class SoccerSimulator implements Simulator {
      */
     @Override
     public GameEvent generateEvent(SimulationGameState gameState) { // todo: should we pass the gameId in?
-        String eventId = UUID.randomUUID().toString();
+        UUID eventId = UUID.randomUUID();
 
         String eventType = getEventTypes().get((int) (Math.random() * getEventTypes().size())).name();
         Instant timestamp = Instant.now();
