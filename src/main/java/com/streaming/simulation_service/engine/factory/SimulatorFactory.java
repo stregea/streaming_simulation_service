@@ -1,4 +1,4 @@
-package com.streaming.simulation_service.engine;
+package com.streaming.simulation_service.engine.factory;
 
 import com.streaming.simulation_service.model.enums.Sport;
 import com.streaming.simulation_service.simulators.Simulator;
