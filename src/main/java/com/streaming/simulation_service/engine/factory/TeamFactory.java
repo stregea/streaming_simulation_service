@@ -1,7 +1,7 @@
 package com.streaming.simulation_service.engine.factory;
 
-import com.streaming.simulation_service.model.game.Player;
-import com.streaming.simulation_service.model.game.Team;
+import com.streaming.simulation_service.model.team.Player;
+import com.streaming.simulation_service.model.team.Team;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

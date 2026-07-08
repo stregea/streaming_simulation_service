@@ -1,4 +1,4 @@
-package com.streaming.simulation_service.model.game;
+package com.streaming.simulation_service.model.progress;
 
 public class MatchProgress {
 

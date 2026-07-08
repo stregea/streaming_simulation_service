@@ -1,4 +1,4 @@
-package com.streaming.simulation_service.model.game;
+package com.streaming.simulation_service.model.team;
 
 import java.util.List;
 import java.util.UUID;

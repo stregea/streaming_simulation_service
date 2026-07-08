@@ -1,6 +1,7 @@
 package com.streaming.simulation_service.model.game;
 
 import com.streaming.simulation_service.model.enums.Sport;
+import com.streaming.simulation_service.model.team.Team;
 
 import java.util.UUID;
 

@@ -1,5 +1,7 @@
 package com.streaming.simulation_service.model.game;
 
+import com.streaming.simulation_service.model.team.Team;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

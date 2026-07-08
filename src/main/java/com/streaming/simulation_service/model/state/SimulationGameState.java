@@ -1,8 +1,8 @@
 package com.streaming.simulation_service.model.state;
 
-import com.streaming.simulation_service.model.game.MatchProgress;
+import com.streaming.simulation_service.model.progress.MatchProgress;
 import com.streaming.simulation_service.model.game.Score;
-import com.streaming.simulation_service.model.game.Team;
+import com.streaming.simulation_service.model.team.Team;
 import com.streaming.simulation_service.model.game.Game;
 
 import java.time.Instant;
