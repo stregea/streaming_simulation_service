@@ -1,8 +1,18 @@
 package com.streaming.simulation_service.engine;
 
+import com.streaming.simulation_service.engine.factory.TeamFactory;
+import com.streaming.simulation_service.model.enums.Sport;
+import com.streaming.simulation_service.model.game.Game;
+import com.streaming.simulation_service.model.game.MatchProgress;
+import com.streaming.simulation_service.model.game.Score;
+import com.streaming.simulation_service.model.game.Team;
 import com.streaming.simulation_service.model.state.SimulationGameState;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Manages the lifecycle of all simulated games within the {@link ActiveGamesRegistry}.
@@ -28,13 +38,16 @@ public class SimulationLifecycleManager {
      */
     private final ActiveGamesRegistry registry;
 
+    private final TeamFactory teamFactory;
+
     /**
      * Construct a new {@code SimulationLifecycleManager}.
      *
      * @param registry the {@link ActiveGamesRegistry} to manage active games
      */
-    public SimulationLifecycleManager(ActiveGamesRegistry registry) {
+    public SimulationLifecycleManager(ActiveGamesRegistry registry, TeamFactory teamFactory) {
         this.registry = registry;
+        this.teamFactory = teamFactory;
     }
 
     /**
@@ -53,9 +66,7 @@ public class SimulationLifecycleManager {
         // todo: add max games to a config.
         for (int i = 0; i < 5; i++) {
             SimulationGameState gameState = createRandomGame();
-            if (gameState != null) {
-                registry.addGame(gameState);
-            }
+            registry.addGame(gameState);
         }
     }
 
@@ -78,16 +89,41 @@ public class SimulationLifecycleManager {
     }
 
     /**
-     * TODO
+     * TODO - IN PROGRESS
      * Generate a randomly created {@link SimulationGameState} with random sport and teams.
      *
      * @return a randomly created {@link SimulationGameState} object, or {@code null} if generation fails
      * @see SimulationGameState
      */
     private SimulationGameState createRandomGame() {
+        List<Sport> sports = List.of(Sport.values());
+
+        Sport selectedSport = sports.get(ThreadLocalRandom.current().nextInt(sports.size()));
+
+        // Depending on the sport, number of players will vary.
+        Integer playerCount = switch (selectedSport) {
+            case SOCCER, FOOTBALL -> 11; // football technically has 22, but fields only 11
+            case BASEBALL -> 9;
+            case BASKETBALL -> 5;
+            case BJJ -> 1;
+            default -> 0;
+        };
+
+        Team teamA = teamFactory.createTeam(playerCount);
+        Team teamB = teamFactory.createTeam(playerCount);
+
+        Game game = new Game(UUID.randomUUID(), selectedSport, teamA, teamB);
+
         //todo:
-        // - Randomly select a sport/game
-        // - Randomly generate teams
-        return null;
+        // - Set time (MatchProgress) based on sport.
+        // this will be a placeholder for now, but will need to be set based on the sport. (e.g. Soccer = 90 minutes, Basketball = 48 minutes, etc.)
+        // This will be done via a "MatchProgress" parent class, then each sport will have it's own class, eg: SoccerMatchProgress, BasketballMatchProgress, etc.
+        // that will extend the parent class and set the time accordingly. This will then be passed to the state.
+        MatchProgress matchProgress = new MatchProgress(60);
+
+        Score score = new Score(List.of(teamA, teamB));
+
+        return new SimulationGameState(game, teamA, matchProgress, score, null);
     }
+
 }
