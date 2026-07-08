@@ -1,6 +1,6 @@
 package com.streaming.simulation_service.model.team;
 
-import com.streaming.simulation_service.model.team.position.Position;
+import com.streaming.simulation_service.model.enums.position.Position;
 
 import java.util.UUID;
 
