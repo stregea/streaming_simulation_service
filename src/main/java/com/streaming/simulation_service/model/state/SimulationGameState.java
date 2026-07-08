@@ -1,6 +1,7 @@
 package com.streaming.simulation_service.model.state;
 
-import com.streaming.simulation_service.model.enums.Sport;
+import com.streaming.simulation_service.model.game.MatchProgress;
+import com.streaming.simulation_service.model.game.Score;
 import com.streaming.simulation_service.model.game.Team;
 import com.streaming.simulation_service.model.game.Game;
 
@@ -16,7 +17,8 @@ import java.time.Instant;
  *
  * @see Game
  * @see Team
- * @see Sport
+ * @see MatchProgress
+ * @see Score
  */
 public class SimulationGameState {
 
@@ -26,26 +28,22 @@ public class SimulationGameState {
     private Game game;
 
     /**
-     * The sport being simulated (e.g. SOCCER, BASKETBALL).
-     */
-    private Sport sport;
-
-    /**
      * The team that is currently acting (performing the most recent action or holding
      * initiative). Note: this is intentionally different from "possession" — the
      * acting team may or may not have physical possession of the ball/puck.
      */
     private Team actingTeam;
 
-    /**
-     * True when the game has finished and no further play should be generated.
-     */
-    private boolean gameOver;
 
     /**
-     * Remaining seconds in the current period/quarter/half, or null if not applicable.
+     * The {@link MatchProgress} that tracks the remaining time for the game.
      */
-    private Integer remainingSeconds;
+    private MatchProgress matchProgress;
+
+    /**
+     * The {@link Score} that tracks the score for the game.
+     */
+    private Score score;
 
     /**
      * Timestamp of the last generated event for this game state.
@@ -63,29 +61,26 @@ public class SimulationGameState {
      * Create a fully-populated {@code SimulationGameState}.
      *
      * @param game               the {@link Game} this state belongs to
-     * @param actingTeam         the team currently acting (may differ from the team with possession)
-     * @param gameOver           whether the game has ended
-     * @param remainingSeconds   remaining seconds in the current period (nullable)
-     * @param lastEventTimestamp timestamp of the last generated event (nullable)
+     * @param actingTeam         the {@link Team} currently acting (may differ from the team with possession).
+     * @param matchProgress      the {@link MatchProgress} tracking the remaining time for the game.
+     * @param lastEventTimestamp timestamp of the last generated event (nullable).
      */
     public SimulationGameState(Game game,
                                Team actingTeam,
-                               boolean gameOver,
-                               Integer remainingSeconds,
+                               MatchProgress matchProgress,
+                               Score score,
                                Instant lastEventTimestamp) {
         this.game = game;
         this.actingTeam = actingTeam;
-        this.gameOver = gameOver;
-        this.remainingSeconds = remainingSeconds;
+        this.matchProgress = matchProgress;
+        this.score = score;
         this.lastEventTimestamp = lastEventTimestamp;
     }
-
-    // --- Getters / Setters ---
 
     /**
      * Returns the {@link Game} this state belongs to.
      *
-     * @return game instance
+     * @return {@link Game} instance
      */
     public Game getGame() {
         return game;
@@ -94,32 +89,51 @@ public class SimulationGameState {
     /**
      * Set the {@link Game} for this simulated state.
      *
-     * @param game non-null game instance
+     * @param game the {@link Game} to set.
      */
     public void setGame(Game game) {
         this.game = game;
     }
 
     /**
-     * Returns the team currently acting in the simulation.
+     * Returns the {@link Team} currently acting in the simulation.
      *
      * <p>Important: "acting" represents which team performed the most recent action
      * or currently has initiative in the simulation. It is not guaranteed to be the
      * same as the team with physical possession.</p>
      *
-     * @return team that is acting, or null if unknown
+     * @return {@link Team} that is acting, or null if unknown
      */
     public Team getActingTeam() {
         return actingTeam;
     }
 
     /**
-     * Set the team that is currently acting for the generated event.
+     * Set the {@link Team} that is currently acting for the generated event.
      *
-     * @param actingTeam The team to set for the last generated event.
+     * @param actingTeam The {@link Team} to set for the last generated event.
      */
     public void setActingTeam(Team actingTeam) {
         this.actingTeam = actingTeam;
+    }
+
+
+    /**
+     * Returns the current {@link MatchProgress} of this state.
+     *
+     * @return {@link MatchProgress} instance.
+     */
+    public MatchProgress getMatchProgress() {
+        return matchProgress;
+    }
+
+    /**
+     * Set the {@link MatchProgress} of this state.
+     *
+     * @param matchProgress the {@link MatchProgress} to set.
+     */
+    public void setMatchProgress(MatchProgress matchProgress) {
+        this.matchProgress = matchProgress;
     }
 
     /**
@@ -128,40 +142,30 @@ public class SimulationGameState {
      * @return {@code true} if the game is completed, {@code false} otherwise.
      */
     public boolean isGameOver() {
-        return gameOver;
+        return matchProgress.hasExpired();
     }
 
     /**
-     * Mark the game as completed or not.
+     * Advance the {@code SimulatedGameState}'s match clock by 'n' seconds.
      *
-     * @param gameOver The boolean to set. Set {@code true} if the game is over, {@code false} if active.
+     * @param seconds the time to advance the clock by.
      */
-    public void setGameOver(boolean gameOver) {
-        this.gameOver = gameOver;
+    public void advanceClock(Integer seconds) {
+        this.matchProgress.advance(seconds);
     }
 
     /**
-     * Returns the remaining seconds in the current {@link Game}, or null when not applicable.
-     *
-     * @return the remaining seconds or null.
+     * Get the {@link Score} score object to
+     * @return the {@link Score} object associated with the current game/match.
      */
-    public Integer getRemainingSeconds() {
-        return remainingSeconds;
-    }
-
-    /**
-     * Update remaining seconds within the current {@link Game}.
-     *
-     * @param remainingSeconds The remaining seconds or null.
-     */
-    public void setRemainingSeconds(Integer remainingSeconds) {
-        this.remainingSeconds = remainingSeconds;
+    public Score getScore() {
+        return score;
     }
 
     /**
      * Returns the timestamp of the last generated event for this {@code SimulationGameState}.
      *
-     * @return the instant of the last event or null.
+     * @return the {@link Instant} of the last event or null.
      */
     public Instant getLastEventTimestamp() {
         return lastEventTimestamp;
