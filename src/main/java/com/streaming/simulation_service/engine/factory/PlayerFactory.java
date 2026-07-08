@@ -25,6 +25,6 @@ public class PlayerFactory {
      * @return a newly created {@link Player} with a unique id and the given name.
      */
     public Player createRandomPlayer(String playerName) {
-        return new Player(UUID.randomUUID(), playerName);
+        return new Player(UUID.randomUUID(), playerName, null);
     }
 }
