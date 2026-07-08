@@ -1,6 +1,6 @@
 package com.streaming.simulation_service.engine;
 
-import com.streaming.simulation_service.engine.factory.TeamFactory;
+import com.streaming.simulation_service.factory.TeamFactory;
 import com.streaming.simulation_service.model.enums.Sport;
 import com.streaming.simulation_service.model.game.Game;
 import com.streaming.simulation_service.model.progress.MatchProgress;

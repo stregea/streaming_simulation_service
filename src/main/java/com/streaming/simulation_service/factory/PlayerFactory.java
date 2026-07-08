@@ -1,4 +1,4 @@
-package com.streaming.simulation_service.engine.factory;
+package com.streaming.simulation_service.factory;
 
 import com.streaming.simulation_service.model.team.Player;
 import org.springframework.stereotype.Component;

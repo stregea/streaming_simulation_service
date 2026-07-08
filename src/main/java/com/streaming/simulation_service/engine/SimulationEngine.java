@@ -1,6 +1,6 @@
 package com.streaming.simulation_service.engine;
 
-import com.streaming.simulation_service.engine.factory.SimulatorFactory;
+import com.streaming.simulation_service.factory.SimulatorFactory;
 import com.streaming.simulation_service.model.event.GameEvent;
 import com.streaming.simulation_service.model.state.SimulationGameState;
 import com.streaming.simulation_service.simulators.Simulator;
