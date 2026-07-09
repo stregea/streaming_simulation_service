@@ -1,6 +1,8 @@
 package com.streaming.simulation_service.factory.TeamFactory;
 
 import com.streaming.simulation_service.model.enums.Sport;
+import com.streaming.simulation_service.model.enums.position.Position;
+import com.streaming.simulation_service.model.team.Player;
 import com.streaming.simulation_service.model.team.Team;
 
 /**
@@ -26,6 +28,15 @@ public interface TeamFactory {
      * @return The {@link Sport} handled by this factory.
      */
     Sport getSport();
+
+    /**
+     * Create a {@link Player} populated with a unique ID, name, and position.
+     *
+     * <p>Implementations should return a fully-initialized, non-null {@link Player}.</p>
+     *
+     * @return A newly constructed {@link Player}; must not be {@code null}.
+     */
+    Player createPlayer(Position position);
 
     /**
      * Create a {@link Team} populated with players and a generated display name.
