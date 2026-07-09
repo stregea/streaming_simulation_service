@@ -1,4 +1,4 @@
-package com.streaming.simulation_service.factory;
+package com.streaming.simulation_service.registry;
 
 import com.streaming.simulation_service.model.enums.Sport;
 import com.streaming.simulation_service.simulators.Simulator;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * @see Sport
  */
 @Component
-public class SimulatorFactory {
+public class SimulatorRegistry {
 
     /**
      * Map of simulators that will allow for constant-time lookup.
@@ -31,7 +31,7 @@ public class SimulatorFactory {
      *
      * @param simulators auto-injected list of all {@link Simulator} implementations.
      */
-    public SimulatorFactory(List<Simulator> simulators) {
+    public SimulatorRegistry(List<Simulator> simulators) {
         this.simulators = simulators
                 .stream()
                 .collect(

@@ -1,4 +1,4 @@
-package com.streaming.simulation_service.engine;
+package com.streaming.simulation_service.registry;
 
 import com.streaming.simulation_service.model.state.SimulationGameState;
 import com.streaming.simulation_service.model.game.Game;
