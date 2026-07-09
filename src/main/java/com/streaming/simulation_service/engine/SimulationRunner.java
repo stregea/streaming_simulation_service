@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
  * <p>
  * This component acts as a scheduler that invokes the {@link SimulationOrchestrator}
  * at regular intervals (every 5 seconds by default). Each tick orchestrates the generation
- * of game events for all active simulated games.</p>
+ * of match events for all active simulated matches.</p>
  *
  * @see SimulationOrchestrator
  */
@@ -34,7 +34,7 @@ public class SimulationRunner {
      * Execute one simulation tick.
      * <p>
      * Invoked automatically every 5 seconds by the Spring scheduler ({@code @Scheduled}).
-     * Each tick calls the {@link SimulationOrchestrator} to generate events for all active games and publish them.
+     * Each tick calls the {@link SimulationOrchestrator} to generate events for all active matches and publish them.
      *
      * @see SimulationOrchestrator#simulate()
      */

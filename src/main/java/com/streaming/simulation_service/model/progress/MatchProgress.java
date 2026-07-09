@@ -8,7 +8,7 @@ public class MatchProgress {
     private Integer remainingSeconds;
 
     /**
-     * Construct a new {@code GameClock} object.
+     * Construct a new {@code MatchProgress} object.
      *
      * @param remainingSeconds the total time remaining on the clock.
      */
@@ -17,7 +17,7 @@ public class MatchProgress {
     }
 
     /**
-     * Get the total remaining seconds left in the game clock.
+     * Get the total remaining seconds left in the match clock.
      * @return the total remaining seconds.
      */
     public Integer getRemainingSeconds() {
@@ -25,8 +25,8 @@ public class MatchProgress {
     }
 
     /**
-     * Set the total remaining seconds left in the game clock.
-     * @param remainingSeconds the remaining seconds to set the game clock to.
+     * Set the total remaining seconds left in the match clock.
+     * @param remainingSeconds the remaining seconds to set the match clock to.
      */
     public void setRemainingSeconds(Integer remainingSeconds) {
         this.remainingSeconds = remainingSeconds;
@@ -38,13 +38,13 @@ public class MatchProgress {
      * @param seconds the total time to move the clock forward by.
      */
     public void advance(Integer seconds) {
-        // Adjust the game clock to move forward, never let the time go below 0.
+        // Adjust the match clock to move forward, never let the time go below 0.
         setRemainingSeconds(Math.max(remainingSeconds - seconds, 0));
     }
 
     /**
-     * Determine if the {@code GameClock} has expired or not.
-     * @return {@code true} if the {@code GameClock} has expired, {@code false} otherwise.
+     * Determine if the {@code MatchProgress} has expired or not.
+     * @return {@code true} if the {@code MatchProgress} has expired, {@code false} otherwise.
      */
     public boolean hasExpired() {
         return remainingSeconds == 0;

@@ -34,18 +34,18 @@ public class SimulationEngine {
     }
 
     /**
-     * Randomly simulate a game event for a given {@link SimulationMatchState} by selecting a random {@link Simulator} from the injected list of simulators and using it to generate an event.
+     * Simulate a match event for the given {@link SimulationMatchState} by selecting the appropriate {@link Simulator} for the match sport and generating an event.
      * The generated event is then published to Kafka.
      *
-     * @param game The {@link SimulationMatchState} to generate a game event for.
+     * @param match The {@link SimulationMatchState} to generate a match event for.
      */
-    public void simulateEvent(SimulationMatchState game) {
+    public void simulateEvent(SimulationMatchState match) {
         // Select the appropriate simulator from the SimulatorRegistry.
-//        Simulator simulator = simulatorRegistry.getSimulator(game.getSport());
-//        System.out.println("Selected simulator: " + simulator.getClass().getSimpleName() + " for sport: " + game.getSport());
+//        Simulator simulator = simulatorRegistry.getSimulator(match.getSport());
+//        System.out.println("Selected simulator: " + simulator.getClass().getSimpleName() + " for sport: " + match.getSport());
 
         // Generate an event
-//        GameEvent event = simulator.generateEvent(game);
+//        MatchEvent event = simulator.generateEvent(match);
 //        System.out.println("Generated event: " + event);
 
         // todo: publish event to kafka

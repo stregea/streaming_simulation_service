@@ -8,10 +8,10 @@ import com.streaming.simulation_service.model.team.Team;
 import java.time.Instant;
 
 /**
- * Represents an in-memory, simulated snapshot of a game's runtime state used by the
+ * Represents an in-memory, simulated snapshot of a match's runtime state used by the
  * simulation service while generating events.
  * This class is intended to be a lightweight, mutable holder of commonly accessed
- * simulation properties such as which team is currently acting (performing the most-recent action or holding initiative), whether the game has ended, and a timestamp
+ * simulation properties such as which team is currently acting (performing the most-recent action or holding initiative), whether the match has ended, and a timestamp
  * of the most recent simulated event. It is not intended
  * to be a persistence entity.
  *
@@ -36,33 +36,33 @@ public class SimulationMatchState {
 
 
     /**
-     * The {@link MatchProgress} that tracks the remaining time for the game.
+     * The {@link MatchProgress} that tracks the remaining time for the match.
      */
     private MatchProgress matchProgress;
 
     /**
-     * The {@link Score} that tracks the score for the game.
+     * The {@link Score} that tracks the score for the match.
      */
     private Score score;
 
     /**
-     * Timestamp of the last generated event for this game state.
+     * Timestamp of the last generated event for this match state.
      */
     private Instant lastEventTimestamp;
 
     /**
-     * Create an empty {@code SimulatedGameState} instance. Fields should be populated
+     * Create an empty {@code SimulationMatchState} instance. Fields should be populated
      * by the caller before use in a session.
      */
     public SimulationMatchState() {
     }
 
     /**
-     * Create a fully-populated {@code SimulationGameState}.
+     * Create a fully-populated {@code SimulationMatchState}.
      *
      * @param match               the {@link Match} this state belongs to
      * @param actingTeam         the {@link Team} currently acting (may differ from the team with possession).
-     * @param matchProgress      the {@link MatchProgress} tracking the remaining time for the game.
+     * @param matchProgress      the {@link MatchProgress} tracking the remaining time for the match.
      * @param lastEventTimestamp timestamp of the last generated event (nullable).
      */
     public SimulationMatchState(Match match,
@@ -80,18 +80,18 @@ public class SimulationMatchState {
     /**
      * Returns the {@link Match} this state belongs to.
      *
-     * @return {@link Match} instance
+     * @return the {@link Match} object
      */
-    public Match getGame() {
+    public Match getMatch() {
         return match;
     }
 
     /**
-     * Set the {@link Match} for this simulated state.
+     * Set the {@link Match} for this state.
      *
      * @param match the {@link Match} to set.
      */
-    public void setGame(Match match) {
+    public void setMatch(Match match) {
         this.match = match;
     }
 
@@ -137,16 +137,16 @@ public class SimulationMatchState {
     }
 
     /**
-     * Returns whether the game is over.
+     * Returns whether the match is over.
      *
-     * @return {@code true} if the game is completed, {@code false} otherwise.
+     * @return {@code true} if the match is completed, {@code false} otherwise.
      */
-    public boolean isGameOver() {
+    public boolean isMatchOver() {
         return matchProgress.hasExpired();
     }
 
     /**
-     * Advance the {@code SimulatedGameState}'s match clock by 'n' seconds.
+     * Advance the {@code SimulationMatchState}'s match clock by 'n' seconds.
      *
      * @param seconds the time to advance the clock by.
      */
@@ -155,15 +155,16 @@ public class SimulationMatchState {
     }
 
     /**
-     * Get the {@link Score} score object to
-     * @return the {@link Score} object associated with the current game/match.
+     * Get the {@link Score} score object.
+     *
+     * @return the {@link Score} object associated with the current match.
      */
     public Score getScore() {
         return score;
     }
 
     /**
-     * Returns the timestamp of the last generated event for this {@code SimulationGameState}.
+     * Returns the timestamp of the last generated event for this {@code SimulationMatchState}.
      *
      * @return the {@link Instant} of the last event or null.
      */

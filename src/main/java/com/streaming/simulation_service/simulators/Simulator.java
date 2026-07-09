@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Defines the contract for sport-specific game event simulators.
+ * Defines the contract for sport-specific match event simulators.
  *
  * @see SimulationMatchState
  * @see MatchEvent
@@ -26,12 +26,12 @@ public interface Simulator {
     Sport getSport();
 
     /**
-     * Generate a new game event based on the current sport being played.
+     * Generate a new match event based on the current sport being played.
      *
-     * @param gameState the {@link SimulationMatchState} to generate an event for.
+     * @param matchState the {@link SimulationMatchState} to generate an event for.
      * @return a {@link MatchEvent} object containing new event information.
      */
-    MatchEvent generateEvent(SimulationMatchState gameState);
+    MatchEvent generateEvent(SimulationMatchState matchState);
 
     /**
      * Generate a list of {@link EventType} for the sport to be inserted within a {@link MatchEvent}.

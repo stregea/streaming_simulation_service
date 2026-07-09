@@ -6,7 +6,7 @@ import com.streaming.simulation_service.model.team.Player;
 import com.streaming.simulation_service.model.team.Team;
 
 /**
- * Factory responsible for constructing {@link Team} instances for simulated games.
+ * Factory responsible for constructing {@link Team} instances for simulated matches.
  *
  * <p>The {@code TeamFactory} delegates player creation to the sport specific factories and
  * assembles a {@link Team} with a generated id, name and a list of players. Centralizing

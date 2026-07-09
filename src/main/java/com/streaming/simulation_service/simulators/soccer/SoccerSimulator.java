@@ -15,7 +15,7 @@ import java.util.UUID;
 /**
  * Soccer-specific implementation of the {@link Simulator} interface.
  * <p>
- * Generates soccer events (pass, shot, goal, miss, assist) for simulated games.
+ * Generates soccer events (pass, shot, goal, miss, assist) for simulated matches.
  * Each event is timestamped and includes a randomized payload with player
  * and team information.
  *
@@ -37,20 +37,20 @@ public class SoccerSimulator implements Simulator {
     }
 
     /**
-     * Generate a soccer event for the given game state.
+     * Generate a soccer event for the given match state.
      * <p>
      * Creates a unique event with:
      * <ul>
      *   <li>A randomly selected soccer {@link EventType} (pass, shot, goal, miss, or assist).</li>
      *   <li>Current timestamp.</li>
-     *   <li>Simulated payload with player, team, and game information.</li>
+     *   <li>Simulated payload with player, team, and match information.</li>
      * </ul>
      *
-     * @param gameState the {@link SimulationMatchState} for which to generate an event.
+     * @param matchState the {@link SimulationMatchState} for which to generate an event.
      * @return a {@link MatchEvent} containing the generated soccer event data.
      */
     @Override
-    public MatchEvent generateEvent(SimulationMatchState gameState) { // todo: should we pass the gameId in?
+    public MatchEvent generateEvent(SimulationMatchState matchState) { // todo: should we pass the matchId in?
         UUID eventId = UUID.randomUUID();
 
         String eventType = getEventTypes().get((int) (Math.random() * getEventTypes().size())).name();
@@ -60,12 +60,12 @@ public class SoccerSimulator implements Simulator {
         Map<String, Object> payload = generatePayload();
 
         // todo
-        // need to grab match stat from state, update game.
-        // Game's will be created in the engine, need to grab game bean here
-        // randomly select a game from the current games, grab that id, set here.
+        // need to grab match stat from state, update match.
+        // Matches will be created in the engine, need to grab match bean here
+        // randomly select a match from the current matches, grab that id, set here.
 
 
-        return new MatchEvent(eventId, gameState.getGame().id(), Sport.SOCCER, eventType, timestamp, payload);
+        return new MatchEvent(eventId, matchState.getMatch().id(), Sport.SOCCER, eventType, timestamp, payload);
     }
 
     /**

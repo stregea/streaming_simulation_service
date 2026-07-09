@@ -27,7 +27,7 @@ public class ActiveMatchesRegistry {
     /**
      * Get a {@link Collection} of all active matches being run within the simulation.
      *
-     * @return A {@link Collection} of {@link SimulationMatchState} objects representing all active games.
+     * @return A {@link Collection} of {@link SimulationMatchState} objects representing all active matches.
      */
     public Collection<SimulationMatchState> getActiveMatches() {
         return activeMatches.values();
@@ -39,7 +39,7 @@ public class ActiveMatchesRegistry {
      * @param matchId The id of the {@link Match} within the {@link SimulationMatchState} to be retrieved from the registry.
      * @return An {@link Optional} containing the {@link SimulationMatchState} if found, otherwise empty.
      */
-    public Optional<SimulationMatchState> getMatch(String matchId) {
+    public Optional<SimulationMatchState> getMatch(UUID matchId) {
         return Optional.ofNullable(activeMatches.get(matchId));
     }
 
@@ -61,21 +61,21 @@ public class ActiveMatchesRegistry {
     }
 
     /**
-     * Add a new {@link SimulationMatchState} to the registry of active games.
+     * Add a new {@link SimulationMatchState} to the registry of active matches.
      *
-     * @param gameState The {@link SimulationMatchState} object representing the current state of a {@link Match}.
+     * @param matchState The {@link SimulationMatchState} object representing the current state of a {@link Match}.
      */
-    public void addGame(SimulationMatchState gameState) {
-        activeMatches.put(gameState.getGame().id(), gameState);
+    public void addMatch(SimulationMatchState matchState) {
+        activeMatches.put(matchState.getMatch().id(), matchState);
     }
 
     /**
-     * Remove a {@link SimulationMatchState} from the registry of active games.
+     * Remove a {@link SimulationMatchState} from the registry of active matches.
      *
-     * @param gameState The {@link SimulationMatchState} to be removed from the registry.
+     * @param matchState The {@link SimulationMatchState} to be removed from the registry.
      */
-    public void removeGame(SimulationMatchState gameState) {
-        activeMatches.remove(gameState.getGame().id());
+    public void removeMatch(SimulationMatchState matchState) {
+        activeMatches.remove(matchState.getMatch().id());
     }
 
 }

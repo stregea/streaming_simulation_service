@@ -9,7 +9,7 @@ import java.util.UUID;
 /**
  * Record that will contain the event information that will be sent to Kafka.
  *
- * @param id        - The {@link UUID} of the {@code GameEvent}.
+ * @param id        - The {@link UUID} of the {@code MatchEvent}.
  * @param matchId    - The ID of the match the event occurred in.
  * @param sport     - The sport of the event that occurred in.
  * @param eventType - The event type.

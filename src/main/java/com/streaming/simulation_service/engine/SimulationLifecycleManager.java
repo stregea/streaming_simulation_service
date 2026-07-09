@@ -16,13 +16,13 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Manages the lifecycle of all simulated games within the {@link ActiveMatchesRegistry}.
+ * Manages the lifecycle of all simulated matches within the {@link ActiveMatchesRegistry}.
  * <p>
  * Responsibilities include:
  * <ul>
- *   <li>Bootstrapping initial games on startup</li>
- *   <li>Providing random active games for event generation</li>
- *   <li>Replacing completed or expired games with new ones</li>
+ *   <li>Bootstrapping initial matches on startup</li>
+ *   <li>Providing random active matches for event generation</li>
+ *   <li>Replacing completed or expired matches with new ones</li>
  * </ul>
  *
  * @see ActiveMatchesRegistry
@@ -31,7 +31,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @Component
 public class SimulationLifecycleManager {
     // todo - Determine if there needs to be a function/scheduler that needs to constantly check the
-    //  state of every game to make sure they've completed or not. (So it's not entirely depended on the
+    //  state of every match to make sure they've completed or not. (So it's not entirely depended on the
     //  SimulationScheduler tick that calls the orchestrator.
 
     /**
@@ -44,7 +44,7 @@ public class SimulationLifecycleManager {
     /**
      * Construct a new {@code SimulationLifecycleManager}.
      *
-     * @param registry the {@link ActiveMatchesRegistry} to manage active games
+     * @param registry the {@link ActiveMatchesRegistry} to manage active matches
      */
     public SimulationLifecycleManager(ActiveMatchesRegistry registry, TeamFactoryRegistry teamFactoryRegistry) {
         this.registry = registry;
@@ -52,40 +52,40 @@ public class SimulationLifecycleManager {
     }
 
     /**
-     * Bootstrap initial games into the registry on application startup.
+     * Bootstrap initial matches into the registry on application startup.
      * <p>
      * Invoked automatically by Spring via {@code @PostConstruct}. Creates 5 randomly
-     * generated games and adds them to the {@link ActiveMatchesRegistry} for simulation.
+     * generated matches and adds them to the {@link ActiveMatchesRegistry} for simulation.
      * <p>
-     * TODO: Extract max game count to application configuration.
+     * TODO: Extract max match count to application configuration.
      *
-     * @see #createRandomGame()
-     * @see ActiveMatchesRegistry#addGame(SimulationMatchState)
+     * @see #createRandomMatch()
+     * @see ActiveMatchesRegistry#addMatch(SimulationMatchState)
      */
     @PostConstruct
-    private void bootStrapGames() {
-        // todo: add max games to a config.
+    private void bootStrapMatches() {
+        // todo: add max matches to a config.
         for (int i = 0; i < 5; i++) {
-            SimulationMatchState gameState = createRandomGame();
-            registry.addGame(gameState);
+            SimulationMatchState matchState = createRandomMatch();
+            registry.addMatch(matchState);
         }
     }
 
     /**
-     * Replace a game within the {@link ActiveMatchesRegistry}.
+     * Replace a match within the {@link ActiveMatchesRegistry}.
      *
-     * @param gameState The {@link SimulationMatchState} to replace.
+     * @param matchState The {@link SimulationMatchState} to replace.
      */
-    public void replaceGame(SimulationMatchState gameState) {
-        if (gameState != null) {
-            // Remove previous game simulation from the registry.
-            registry.removeGame(gameState);
+    public void replaceMatch(SimulationMatchState matchState) {
+        if (matchState != null) {
+            // Remove previous match simulation from the registry.
+            registry.removeMatch(matchState);
 
-            // Create a new game.
-            SimulationMatchState newGameState = createRandomGame();
+            // Create a new match.
+            SimulationMatchState newMatchState = createRandomMatch();
 
-            // Add the new game to the registry.
-            registry.addGame(newGameState);
+            // Add the new match to the registry.
+            registry.addMatch(newMatchState);
         }
     }
 
@@ -96,7 +96,7 @@ public class SimulationLifecycleManager {
      * @return a randomly created {@link SimulationMatchState} object, or {@code null} if generation fails
      * @see SimulationMatchState
      */
-    private SimulationMatchState createRandomGame() {
+    private SimulationMatchState createRandomMatch() {
 //        List<Sport> sports = List.of(Sport.values());
         List<Sport> sports = List.of(Sport.SOCCER); // todo: uncomment top line once more sports are complete.
 
