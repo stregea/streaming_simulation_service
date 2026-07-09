@@ -1,7 +1,7 @@
 package com.streaming.simulation_service.registry;
 
+import com.streaming.simulation_service.model.match.Match;
 import com.streaming.simulation_service.model.state.SimulationGameState;
-import com.streaming.simulation_service.model.game.Game;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -34,9 +34,9 @@ public class ActiveGamesRegistry {
     }
 
     /**
-     * Get an active {@link SimulationGameState} from the registry based on a {@link Game}'s id.
+     * Get an active {@link SimulationGameState} from the registry based on a {@link Match}'s id.
      *
-     * @param gameId The id of the {@link Game} within the {@link SimulationGameState} to be retrieved from the registry.
+     * @param gameId The id of the {@link Match} within the {@link SimulationGameState} to be retrieved from the registry.
      * @return An {@link Optional} containing the {@link SimulationGameState} if found, otherwise empty.
      */
     public Optional<SimulationGameState> getGame(String gameId) {
@@ -63,7 +63,7 @@ public class ActiveGamesRegistry {
     /**
      * Add a new {@link SimulationGameState} to the registry of active games.
      *
-     * @param gameState The {@link SimulationGameState} object representing the current state of a {@link Game}.
+     * @param gameState The {@link SimulationGameState} object representing the current state of a {@link Match}.
      */
     public void addGame(SimulationGameState gameState) {
         activeGames.put(gameState.getGame().id(), gameState);

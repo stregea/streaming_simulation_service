@@ -1,4 +1,4 @@
-package com.streaming.simulation_service.model.game;
+package com.streaming.simulation_service.model.match;
 
 import com.streaming.simulation_service.model.enums.Sport;
 import com.streaming.simulation_service.model.team.Team;
@@ -6,14 +6,14 @@ import com.streaming.simulation_service.model.team.Team;
 import java.util.UUID;
 
 /**
- * Record that will represent a {@code Game}.
+ * Record that will represent a {@code Match}.
  *
- * @param id       The {@link UUID} of the game.
+ * @param id       The {@link UUID} of the Match.
  * @param sport    The sport of the game.
  * @param homeTeam The home team.
  * @param awayTeam The away team.
  * @see Sport
  * @see Team
  */
-public record Game(UUID id, Sport sport, Team homeTeam, Team awayTeam) {
+public record Match(UUID id, Sport sport, Team homeTeam, Team awayTeam) {
 }

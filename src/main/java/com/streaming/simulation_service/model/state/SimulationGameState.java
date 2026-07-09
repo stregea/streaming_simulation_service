@@ -1,9 +1,9 @@
 package com.streaming.simulation_service.model.state;
 
+import com.streaming.simulation_service.model.match.Match;
 import com.streaming.simulation_service.model.progress.MatchProgress;
-import com.streaming.simulation_service.model.game.Score;
+import com.streaming.simulation_service.model.match.Score;
 import com.streaming.simulation_service.model.team.Team;
-import com.streaming.simulation_service.model.game.Game;
 
 import java.time.Instant;
 
@@ -15,7 +15,7 @@ import java.time.Instant;
  * of the most recent simulated event. It is not intended
  * to be a persistence entity.
  *
- * @see Game
+ * @see Match
  * @see Team
  * @see MatchProgress
  * @see Score
@@ -23,9 +23,9 @@ import java.time.Instant;
 public class SimulationGameState {
 
     /**
-     * The {@link Game} this state belongs to.
+     * The {@link Match} this state belongs to.
      */
-    private Game game;
+    private Match match;
 
     /**
      * The team that is currently acting (performing the most recent action or holding
@@ -60,17 +60,17 @@ public class SimulationGameState {
     /**
      * Create a fully-populated {@code SimulationGameState}.
      *
-     * @param game               the {@link Game} this state belongs to
+     * @param match               the {@link Match} this state belongs to
      * @param actingTeam         the {@link Team} currently acting (may differ from the team with possession).
      * @param matchProgress      the {@link MatchProgress} tracking the remaining time for the game.
      * @param lastEventTimestamp timestamp of the last generated event (nullable).
      */
-    public SimulationGameState(Game game,
+    public SimulationGameState(Match match,
                                Team actingTeam,
                                MatchProgress matchProgress,
                                Score score,
                                Instant lastEventTimestamp) {
-        this.game = game;
+        this.match = match;
         this.actingTeam = actingTeam;
         this.matchProgress = matchProgress;
         this.score = score;
@@ -78,21 +78,21 @@ public class SimulationGameState {
     }
 
     /**
-     * Returns the {@link Game} this state belongs to.
+     * Returns the {@link Match} this state belongs to.
      *
-     * @return {@link Game} instance
+     * @return {@link Match} instance
      */
-    public Game getGame() {
-        return game;
+    public Match getGame() {
+        return match;
     }
 
     /**
-     * Set the {@link Game} for this simulated state.
+     * Set the {@link Match} for this simulated state.
      *
-     * @param game the {@link Game} to set.
+     * @param match the {@link Match} to set.
      */
-    public void setGame(Game game) {
-        this.game = game;
+    public void setGame(Match match) {
+        this.match = match;
     }
 
     /**

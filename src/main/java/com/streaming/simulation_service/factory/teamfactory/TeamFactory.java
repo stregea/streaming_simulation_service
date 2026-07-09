@@ -1,4 +1,4 @@
-package com.streaming.simulation_service.factory.TeamFactory;
+package com.streaming.simulation_service.factory.teamfactory;
 
 import com.streaming.simulation_service.model.enums.Sport;
 import com.streaming.simulation_service.model.enums.position.Position;

@@ -1,12 +1,13 @@
 package com.streaming.simulation_service.engine;
 
-import com.streaming.simulation_service.factory.TeamFactory;
 import com.streaming.simulation_service.model.enums.Sport;
-import com.streaming.simulation_service.model.game.Game;
+import com.streaming.simulation_service.model.match.Match;
 import com.streaming.simulation_service.model.progress.MatchProgress;
-import com.streaming.simulation_service.model.game.Score;
+import com.streaming.simulation_service.model.match.Score;
 import com.streaming.simulation_service.model.team.Team;
 import com.streaming.simulation_service.model.state.SimulationGameState;
+import com.streaming.simulation_service.registry.ActiveGamesRegistry;
+import com.streaming.simulation_service.registry.TeamFactoryRegistry;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
@@ -38,16 +39,16 @@ public class SimulationLifecycleManager {
      */
     private final ActiveGamesRegistry registry;
 
-    private final TeamFactory teamFactory;
+    private final TeamFactoryRegistry teamFactoryRegistry;
 
     /**
      * Construct a new {@code SimulationLifecycleManager}.
      *
      * @param registry the {@link ActiveGamesRegistry} to manage active games
      */
-    public SimulationLifecycleManager(ActiveGamesRegistry registry, TeamFactory teamFactory) {
+    public SimulationLifecycleManager(ActiveGamesRegistry registry, TeamFactoryRegistry teamFactoryRegistry) {
         this.registry = registry;
-        this.teamFactory = teamFactory;
+        this.teamFactoryRegistry = teamFactoryRegistry;
     }
 
     /**
@@ -96,23 +97,15 @@ public class SimulationLifecycleManager {
      * @see SimulationGameState
      */
     private SimulationGameState createRandomGame() {
-        List<Sport> sports = List.of(Sport.values());
+//        List<Sport> sports = List.of(Sport.values());
+        List<Sport> sports = List.of(Sport.SOCCER); // todo: uncomment top line once more sports are complete.
 
         Sport selectedSport = sports.get(ThreadLocalRandom.current().nextInt(sports.size()));
 
-        // Depending on the sport, number of players will vary.
-        Integer playerCount = switch (selectedSport) {
-            case SOCCER, FOOTBALL -> 11; // football technically has 22, but fields only 11
-            case BASEBALL -> 9;
-            case BASKETBALL -> 5;
-            case BJJ -> 1;
-            default -> 0;
-        };
+        Team teamA = teamFactoryRegistry.getTeamFactory(selectedSport).createTeam();
+        Team teamB = teamFactoryRegistry.getTeamFactory(selectedSport).createTeam();
 
-        Team teamA = teamFactory.createTeam(playerCount);
-        Team teamB = teamFactory.createTeam(playerCount);
-
-        Game game = new Game(UUID.randomUUID(), selectedSport, teamA, teamB);
+        Match match = new Match(UUID.randomUUID(), selectedSport, teamA, teamB);
 
         //todo:
         // - Set time (MatchProgress) based on sport.
@@ -123,7 +116,7 @@ public class SimulationLifecycleManager {
 
         Score score = new Score(List.of(teamA, teamB));
 
-        return new SimulationGameState(game, teamA, matchProgress, score, null);
+        return new SimulationGameState(match, teamA, matchProgress, score, null);
     }
 
 }

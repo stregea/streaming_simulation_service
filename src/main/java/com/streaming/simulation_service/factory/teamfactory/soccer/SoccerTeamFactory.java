@@ -1,6 +1,6 @@
-package com.streaming.simulation_service.factory.TeamFactory.soccer;
+package com.streaming.simulation_service.factory.teamfactory.soccer;
 
-import com.streaming.simulation_service.factory.TeamFactory.TeamFactory;
+import com.streaming.simulation_service.factory.teamfactory.TeamFactory;
 import com.streaming.simulation_service.model.enums.Sport;
 import com.streaming.simulation_service.model.enums.position.Position;
 import com.streaming.simulation_service.model.enums.position.soccer.SoccerPosition;
