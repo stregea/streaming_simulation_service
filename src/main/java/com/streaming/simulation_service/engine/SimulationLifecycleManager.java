@@ -5,8 +5,8 @@ import com.streaming.simulation_service.model.match.Match;
 import com.streaming.simulation_service.model.progress.MatchProgress;
 import com.streaming.simulation_service.model.match.Score;
 import com.streaming.simulation_service.model.team.Team;
-import com.streaming.simulation_service.model.state.SimulationGameState;
-import com.streaming.simulation_service.registry.ActiveGamesRegistry;
+import com.streaming.simulation_service.model.state.SimulationMatchState;
+import com.streaming.simulation_service.registry.ActiveMatchesRegistry;
 import com.streaming.simulation_service.registry.TeamFactoryRegistry;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Manages the lifecycle of all simulated games within the {@link ActiveGamesRegistry}.
+ * Manages the lifecycle of all simulated games within the {@link ActiveMatchesRegistry}.
  * <p>
  * Responsibilities include:
  * <ul>
@@ -25,8 +25,8 @@ import java.util.concurrent.ThreadLocalRandom;
  *   <li>Replacing completed or expired games with new ones</li>
  * </ul>
  *
- * @see ActiveGamesRegistry
- * @see SimulationGameState
+ * @see ActiveMatchesRegistry
+ * @see SimulationMatchState
  */
 @Component
 public class SimulationLifecycleManager {
@@ -35,18 +35,18 @@ public class SimulationLifecycleManager {
     //  SimulationScheduler tick that calls the orchestrator.
 
     /**
-     * Registry that contains all active {@link SimulationGameState}'s within the simulation.
+     * Registry that contains all active {@link SimulationMatchState}'s within the simulation.
      */
-    private final ActiveGamesRegistry registry;
+    private final ActiveMatchesRegistry registry;
 
     private final TeamFactoryRegistry teamFactoryRegistry;
 
     /**
      * Construct a new {@code SimulationLifecycleManager}.
      *
-     * @param registry the {@link ActiveGamesRegistry} to manage active games
+     * @param registry the {@link ActiveMatchesRegistry} to manage active games
      */
-    public SimulationLifecycleManager(ActiveGamesRegistry registry, TeamFactoryRegistry teamFactoryRegistry) {
+    public SimulationLifecycleManager(ActiveMatchesRegistry registry, TeamFactoryRegistry teamFactoryRegistry) {
         this.registry = registry;
         this.teamFactoryRegistry = teamFactoryRegistry;
     }
@@ -55,34 +55,34 @@ public class SimulationLifecycleManager {
      * Bootstrap initial games into the registry on application startup.
      * <p>
      * Invoked automatically by Spring via {@code @PostConstruct}. Creates 5 randomly
-     * generated games and adds them to the {@link ActiveGamesRegistry} for simulation.
+     * generated games and adds them to the {@link ActiveMatchesRegistry} for simulation.
      * <p>
      * TODO: Extract max game count to application configuration.
      *
      * @see #createRandomGame()
-     * @see ActiveGamesRegistry#addGame(SimulationGameState)
+     * @see ActiveMatchesRegistry#addGame(SimulationMatchState)
      */
     @PostConstruct
     private void bootStrapGames() {
         // todo: add max games to a config.
         for (int i = 0; i < 5; i++) {
-            SimulationGameState gameState = createRandomGame();
+            SimulationMatchState gameState = createRandomGame();
             registry.addGame(gameState);
         }
     }
 
     /**
-     * Replace a game within the {@link ActiveGamesRegistry}.
+     * Replace a game within the {@link ActiveMatchesRegistry}.
      *
-     * @param gameState The {@link SimulationGameState} to replace.
+     * @param gameState The {@link SimulationMatchState} to replace.
      */
-    public void replaceGame(SimulationGameState gameState) {
+    public void replaceGame(SimulationMatchState gameState) {
         if (gameState != null) {
             // Remove previous game simulation from the registry.
             registry.removeGame(gameState);
 
             // Create a new game.
-            SimulationGameState newGameState = createRandomGame();
+            SimulationMatchState newGameState = createRandomGame();
 
             // Add the new game to the registry.
             registry.addGame(newGameState);
@@ -91,12 +91,12 @@ public class SimulationLifecycleManager {
 
     /**
      * TODO - IN PROGRESS
-     * Generate a randomly created {@link SimulationGameState} with random sport and teams.
+     * Generate a randomly created {@link SimulationMatchState} with random sport and teams.
      *
-     * @return a randomly created {@link SimulationGameState} object, or {@code null} if generation fails
-     * @see SimulationGameState
+     * @return a randomly created {@link SimulationMatchState} object, or {@code null} if generation fails
+     * @see SimulationMatchState
      */
-    private SimulationGameState createRandomGame() {
+    private SimulationMatchState createRandomGame() {
 //        List<Sport> sports = List.of(Sport.values());
         List<Sport> sports = List.of(Sport.SOCCER); // todo: uncomment top line once more sports are complete.
 
@@ -116,7 +116,7 @@ public class SimulationLifecycleManager {
 
         Score score = new Score(List.of(teamA, teamB));
 
-        return new SimulationGameState(match, teamA, matchProgress, score, null);
+        return new SimulationMatchState(match, teamA, matchProgress, score, null);
     }
 
 }

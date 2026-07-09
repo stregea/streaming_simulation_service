@@ -20,7 +20,7 @@ import java.time.Instant;
  * @see MatchProgress
  * @see Score
  */
-public class SimulationGameState {
+public class SimulationMatchState {
 
     /**
      * The {@link Match} this state belongs to.
@@ -54,7 +54,7 @@ public class SimulationGameState {
      * Create an empty {@code SimulatedGameState} instance. Fields should be populated
      * by the caller before use in a session.
      */
-    public SimulationGameState() {
+    public SimulationMatchState() {
     }
 
     /**
@@ -65,11 +65,11 @@ public class SimulationGameState {
      * @param matchProgress      the {@link MatchProgress} tracking the remaining time for the game.
      * @param lastEventTimestamp timestamp of the last generated event (nullable).
      */
-    public SimulationGameState(Match match,
-                               Team actingTeam,
-                               MatchProgress matchProgress,
-                               Score score,
-                               Instant lastEventTimestamp) {
+    public SimulationMatchState(Match match,
+                                Team actingTeam,
+                                MatchProgress matchProgress,
+                                Score score,
+                                Instant lastEventTimestamp) {
         this.match = match;
         this.actingTeam = actingTeam;
         this.matchProgress = matchProgress;

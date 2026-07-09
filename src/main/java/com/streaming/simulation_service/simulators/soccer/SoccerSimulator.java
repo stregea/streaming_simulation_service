@@ -2,8 +2,8 @@ package com.streaming.simulation_service.simulators.soccer;
 
 import com.streaming.simulation_service.model.enums.Sport;
 import com.streaming.simulation_service.model.event.EventType;
-import com.streaming.simulation_service.model.event.GameEvent;
-import com.streaming.simulation_service.model.state.SimulationGameState;
+import com.streaming.simulation_service.model.event.MatchEvent;
+import com.streaming.simulation_service.model.state.SimulationMatchState;
 import com.streaming.simulation_service.simulators.Simulator;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +20,7 @@ import java.util.UUID;
  * and team information.
  *
  * @see Simulator
- * @see GameEvent
+ * @see MatchEvent
  * @see EventType
  */
 @Component
@@ -46,11 +46,11 @@ public class SoccerSimulator implements Simulator {
      *   <li>Simulated payload with player, team, and game information.</li>
      * </ul>
      *
-     * @param gameState the {@link SimulationGameState} for which to generate an event.
-     * @return a {@link GameEvent} containing the generated soccer event data.
+     * @param gameState the {@link SimulationMatchState} for which to generate an event.
+     * @return a {@link MatchEvent} containing the generated soccer event data.
      */
     @Override
-    public GameEvent generateEvent(SimulationGameState gameState) { // todo: should we pass the gameId in?
+    public MatchEvent generateEvent(SimulationMatchState gameState) { // todo: should we pass the gameId in?
         UUID eventId = UUID.randomUUID();
 
         String eventType = getEventTypes().get((int) (Math.random() * getEventTypes().size())).name();
@@ -65,7 +65,7 @@ public class SoccerSimulator implements Simulator {
         // randomly select a game from the current games, grab that id, set here.
 
 
-        return new GameEvent(eventId, gameState.getGame().id(), Sport.SOCCER, eventType, timestamp, payload);
+        return new MatchEvent(eventId, gameState.getGame().id(), Sport.SOCCER, eventType, timestamp, payload);
     }
 
     /**

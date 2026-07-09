@@ -2,8 +2,8 @@ package com.streaming.simulation_service.simulators;
 
 import com.streaming.simulation_service.model.enums.Sport;
 import com.streaming.simulation_service.model.event.EventType;
-import com.streaming.simulation_service.model.event.GameEvent;
-import com.streaming.simulation_service.model.state.SimulationGameState;
+import com.streaming.simulation_service.model.event.MatchEvent;
+import com.streaming.simulation_service.model.state.SimulationMatchState;
 
 import java.util.List;
 import java.util.Map;
@@ -11,8 +11,8 @@ import java.util.Map;
 /**
  * Defines the contract for sport-specific game event simulators.
  *
- * @see SimulationGameState
- * @see GameEvent
+ * @see SimulationMatchState
+ * @see MatchEvent
  * @see EventType
  * @see Sport
  */
@@ -28,20 +28,20 @@ public interface Simulator {
     /**
      * Generate a new game event based on the current sport being played.
      *
-     * @param gameState the {@link SimulationGameState} to generate an event for.
-     * @return a {@link GameEvent} object containing new event information.
+     * @param gameState the {@link SimulationMatchState} to generate an event for.
+     * @return a {@link MatchEvent} object containing new event information.
      */
-    GameEvent generateEvent(SimulationGameState gameState);
+    MatchEvent generateEvent(SimulationMatchState gameState);
 
     /**
-     * Generate a list of {@link EventType} for the sport to be inserted within a {@link GameEvent}.
+     * Generate a list of {@link EventType} for the sport to be inserted within a {@link MatchEvent}.
      *
      * @return a list of {@link EventType}.
      */
     List<EventType> getEventTypes();
 
     /**
-     * Generate a simulated payload to be inserted within a {@link GameEvent}.
+     * Generate a simulated payload to be inserted within a {@link MatchEvent}.
      *
      * @return a Map containing sports data.
      */
