@@ -1,6 +1,6 @@
 package com.streaming.simulation_service.registry;
 
-import com.streaming.simulation_service.teamfactory.TeamFactory;
+import com.streaming.simulation_service.factory.team.TeamFactory;
 import com.streaming.simulation_service.model.enums.Sport;
 import org.springframework.stereotype.Component;
 
