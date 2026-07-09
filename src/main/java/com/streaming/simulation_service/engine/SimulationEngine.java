@@ -1,6 +1,6 @@
 package com.streaming.simulation_service.engine;
 
-import com.streaming.simulation_service.factory.SimulatorFactory;
+import com.streaming.simulation_service.registry.SimulatorRegistry;
 import com.streaming.simulation_service.model.event.GameEvent;
 import com.streaming.simulation_service.model.state.SimulationGameState;
 import com.streaming.simulation_service.simulators.Simulator;
@@ -22,15 +22,15 @@ public class SimulationEngine {
     /**
      * Object that will select the correct {@link Simulator} based on the sport being simulated.
      */
-    private final SimulatorFactory simulatorFactory;
+    private final SimulatorRegistry simulatorRegistry;
 
     /**
      * Construct a new {@code SimulationEngine}.
      *
-     * @param simulatorFactory the {@link SimulatorFactory} for retrieving sport-specific simulators
+     * @param simulatorRegistry the {@link SimulatorRegistry} for retrieving sport-specific simulators
      */
-    public SimulationEngine(SimulatorFactory simulatorFactory) {
-        this.simulatorFactory = simulatorFactory;
+    public SimulationEngine(SimulatorRegistry simulatorRegistry) {
+        this.simulatorRegistry = simulatorRegistry;
     }
 
     /**
@@ -40,8 +40,8 @@ public class SimulationEngine {
      * @param game The {@link SimulationGameState} to generate a game event for.
      */
     public void simulateEvent(SimulationGameState game) {
-        // Select the appropriate simulator from the SimulatorFactory.
-//        Simulator simulator = simulatorFactory.getSimulator(game.getSport());
+        // Select the appropriate simulator from the SimulatorRegistry.
+//        Simulator simulator = simulatorRegistry.getSimulator(game.getSport());
 //        System.out.println("Selected simulator: " + simulator.getClass().getSimpleName() + " for sport: " + game.getSport());
 
         // Generate an event
