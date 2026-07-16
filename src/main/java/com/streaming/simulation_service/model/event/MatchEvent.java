@@ -1,5 +1,6 @@
 package com.streaming.simulation_service.model.event;
 
+import com.streaming.simulation_service.model.enums.EventType;
 import com.streaming.simulation_service.model.enums.Sport;
 
 import java.time.Instant;
@@ -16,6 +17,6 @@ import java.util.UUID;
  * @param timestamp - The time in which the event occurred.
  * @param payload   - The payload that contains other sport-specific data.
  */
-public record MatchEvent(UUID id, UUID matchId, Sport sport, String eventType, Instant timestamp,
+public record MatchEvent(UUID id, UUID matchId, Sport sport, EventType eventType, Instant timestamp,
                          Map<String, Object> payload) {
 }

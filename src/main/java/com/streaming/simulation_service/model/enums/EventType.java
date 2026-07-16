@@ -1,4 +1,4 @@
-package com.streaming.simulation_service.model.event;
+package com.streaming.simulation_service.model.enums;
 
 /**
  * Enum that will represent the type of event that occurred.
