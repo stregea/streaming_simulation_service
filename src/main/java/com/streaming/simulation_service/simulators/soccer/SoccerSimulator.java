@@ -1,7 +1,7 @@
 package com.streaming.simulation_service.simulators.soccer;
 
 import com.streaming.simulation_service.model.enums.Sport;
-import com.streaming.simulation_service.model.event.EventType;
+import com.streaming.simulation_service.model.enums.EventType;
 import com.streaming.simulation_service.model.event.MatchEvent;
 import com.streaming.simulation_service.model.state.SimulationMatchState;
 import com.streaming.simulation_service.simulators.Simulator;
@@ -11,6 +11,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Soccer-specific implementation of the {@link Simulator} interface.
@@ -53,7 +54,7 @@ public class SoccerSimulator implements Simulator {
     public MatchEvent generateEvent(SimulationMatchState matchState) { // todo: should we pass the matchId in?
         UUID eventId = UUID.randomUUID();
 
-        String eventType = getEventTypes().get((int) (Math.random() * getEventTypes().size())).name();
+        EventType eventType = getEventTypes().get(ThreadLocalRandom.current().nextInt(getEventTypes().size()));
         Instant timestamp = Instant.now();
 
         // todo
