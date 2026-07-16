@@ -1,7 +1,7 @@
 package com.streaming.simulation_service.simulators;
 
 import com.streaming.simulation_service.model.enums.Sport;
-import com.streaming.simulation_service.model.event.EventType;
+import com.streaming.simulation_service.model.enums.EventType;
 import com.streaming.simulation_service.model.event.MatchEvent;
 import com.streaming.simulation_service.model.state.SimulationMatchState;
 
