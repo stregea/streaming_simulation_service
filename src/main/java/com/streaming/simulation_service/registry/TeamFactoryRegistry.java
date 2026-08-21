@@ -23,13 +23,13 @@ public class TeamFactoryRegistry {
     private final Map<Sport, TeamFactory> teamFactories;
 
     /**
-     * Construct a new {@code SimulatorFactory}.
+     * Construct a new {@code TeamFactory}.
      * <p>
      * Automatically collects all {@link TeamFactory} implementations from the Spring container
      * and builds a map keyed by {@link Sport} for constant-time lookup. Each simulator's
      * sport type is determined by calling {@link TeamFactory#getSport()}.
      *
-     * @param teamFactories auto-injected list of all {@link TeamFactory} implementations.
+     * @param teamFactories Auto-injected list of all {@link TeamFactory} implementations.
      */
     public TeamFactoryRegistry(List<TeamFactory> teamFactories) {
         this.teamFactories = teamFactories
@@ -43,7 +43,7 @@ public class TeamFactoryRegistry {
     }
 
     /**
-     * Get the correct simulator based on a {@link Sport}.
+     * Get the correct {@link TeamFactory} based on a {@link Sport}.
      *
      * @param sport The {@link Sport} to retrieve a {@link TeamFactory} for.
      * @return The corresponding {@link TeamFactory} to a {@link Sport}.

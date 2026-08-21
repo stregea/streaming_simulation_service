@@ -41,12 +41,12 @@ public class SimulationEngine {
      */
     public void simulateEvent(SimulationMatchState match) {
         // Select the appropriate simulator from the SimulatorRegistry.
-//        Simulator simulator = simulatorRegistry.getSimulator(match.getSport());
-//        System.out.println("Selected simulator: " + simulator.getClass().getSimpleName() + " for sport: " + match.getSport());
+        Simulator simulator = simulatorRegistry.getSimulator(match.getMatch().sport());
 
         // Generate an event
-//        MatchEvent event = simulator.generateEvent(match);
-//        System.out.println("Generated event: " + event);
+        MatchEvent event = simulator.generateEvent(match);
+
+        match.advanceClock(event);
 
         // todo: publish event to kafka
     }

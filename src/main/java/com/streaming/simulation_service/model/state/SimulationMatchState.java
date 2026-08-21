@@ -1,8 +1,9 @@
 package com.streaming.simulation_service.model.state;
 
+import com.streaming.simulation_service.model.event.MatchEvent;
 import com.streaming.simulation_service.model.match.Match;
-import com.streaming.simulation_service.model.progress.MatchProgress;
 import com.streaming.simulation_service.model.match.Score;
+import com.streaming.simulation_service.model.progress.MatchProgress;
 import com.streaming.simulation_service.model.team.Team;
 
 import java.time.Instant;
@@ -10,11 +11,12 @@ import java.time.Instant;
 /**
  * Represents an in-memory, simulated snapshot of a match's runtime state used by the
  * simulation service while generating events.
- * This class is intended to be a lightweight, mutable holder of commonly accessed
- * simulation properties such as which team is currently acting (performing the most-recent action or holding initiative), whether the match has ended, and a timestamp
- * of the most recent simulated event. It is not intended
- * to be a persistence entity.
  *
+ * <p>This class is intended to be a lightweight, mutable holder of commonly accessed
+ * simulation properties such as which team is currently acting (performing the most-recent action or holding initiative), whether the match has ended, and a timestamp
+ * of the most recent simulated event, it is not intended to be a persistence entity.</p>
+ *
+ * todo: rename to SimulationContext / MatchContext
  * @see Match
  * @see Team
  * @see MatchProgress
@@ -42,6 +44,7 @@ public class SimulationMatchState {
 
     /**
      * The {@link Score} that tracks the score for the match.
+     * TODO - Remove and move to the Match Service.
      */
     private Score score;
 
@@ -60,10 +63,10 @@ public class SimulationMatchState {
     /**
      * Create a fully-populated {@code SimulationMatchState}.
      *
-     * @param match               the {@link Match} this state belongs to
-     * @param actingTeam         the {@link Team} currently acting (may differ from the team with possession).
-     * @param matchProgress      the {@link MatchProgress} tracking the remaining time for the match.
-     * @param lastEventTimestamp timestamp of the last generated event (nullable).
+     * @param match              The {@link Match} this state belongs to
+     * @param actingTeam         The {@link Team} currently acting (may differ from the team with possession).
+     * @param matchProgress      The {@link MatchProgress} tracking the remaining time for the match.
+     * @param lastEventTimestamp Timestamp of the last generated event (nullable).
      */
     public SimulationMatchState(Match match,
                                 Team actingTeam,
@@ -80,7 +83,7 @@ public class SimulationMatchState {
     /**
      * Returns the {@link Match} this state belongs to.
      *
-     * @return the {@link Match} object
+     * @return The {@link Match} object
      */
     public Match getMatch() {
         return match;
@@ -89,7 +92,7 @@ public class SimulationMatchState {
     /**
      * Set the {@link Match} for this state.
      *
-     * @param match the {@link Match} to set.
+     * @param match The {@link Match} to set.
      */
     public void setMatch(Match match) {
         this.match = match;
@@ -102,7 +105,7 @@ public class SimulationMatchState {
      * or currently has initiative in the simulation. It is not guaranteed to be the
      * same as the team with physical possession.</p>
      *
-     * @return {@link Team} that is acting, or null if unknown
+     * @return {@link Team} that is acting, or null if unknown.
      */
     public Team getActingTeam() {
         return actingTeam;
@@ -117,7 +120,6 @@ public class SimulationMatchState {
         this.actingTeam = actingTeam;
     }
 
-
     /**
      * Returns the current {@link MatchProgress} of this state.
      *
@@ -130,7 +132,7 @@ public class SimulationMatchState {
     /**
      * Set the {@link MatchProgress} of this state.
      *
-     * @param matchProgress the {@link MatchProgress} to set.
+     * @param matchProgress The {@link MatchProgress} to set.
      */
     public void setMatchProgress(MatchProgress matchProgress) {
         this.matchProgress = matchProgress;
@@ -146,18 +148,18 @@ public class SimulationMatchState {
     }
 
     /**
-     * Advance the {@code SimulationMatchState}'s match clock by 'n' seconds.
+     * Advance the {@code SimulationMatchState}'s match clock by the time in between two {@link MatchEvent}'s.
      *
-     * @param seconds the time to advance the clock by.
+     * @param matchEvent The match event containing the timestamp for the advancement.
      */
-    public void advanceClock(Integer seconds) {
-        this.matchProgress.advance(seconds);
+    public void advanceClock(MatchEvent matchEvent) {
+        this.matchProgress.advance(matchEvent);
     }
 
     /**
      * Get the {@link Score} score object.
      *
-     * @return the {@link Score} object associated with the current match.
+     * @return The {@link Score} object associated with the current match.
      */
     public Score getScore() {
         return score;
@@ -166,7 +168,7 @@ public class SimulationMatchState {
     /**
      * Returns the timestamp of the last generated event for this {@code SimulationMatchState}.
      *
-     * @return the {@link Instant} of the last event or null.
+     * @return The {@link Instant} of the last event or null.
      */
     public Instant getLastEventTimestamp() {
         return lastEventTimestamp;
