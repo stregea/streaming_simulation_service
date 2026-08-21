@@ -1,14 +1,17 @@
 package com.streaming.simulation_service.engine;
 
+import com.streaming.simulation_service.factory.team.TeamFactory;
 import com.streaming.simulation_service.model.enums.Sport;
 import com.streaming.simulation_service.model.match.Match;
-import com.streaming.simulation_service.model.progress.MatchProgress;
 import com.streaming.simulation_service.model.match.Score;
+import com.streaming.simulation_service.model.progress.MatchProgress;
 import com.streaming.simulation_service.model.team.Team;
 import com.streaming.simulation_service.model.state.SimulationMatchState;
 import com.streaming.simulation_service.registry.ActiveMatchesRegistry;
+import com.streaming.simulation_service.registry.MatchProgressRegistry;
 import com.streaming.simulation_service.registry.TeamFactoryRegistry;
 import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -30,25 +33,37 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 @Component
 public class SimulationLifecycleManager {
-    // todo - Determine if there needs to be a function/scheduler that needs to constantly check the
-    //  state of every match to make sure they've completed or not. (So it's not entirely depended on the
-    //  SimulationScheduler tick that calls the orchestrator.
 
     /**
      * Registry that contains all active {@link SimulationMatchState}'s within the simulation.
      */
     private final ActiveMatchesRegistry registry;
 
+    /**
+     * Registry that contains all {@link TeamFactory} implementations.
+     */
     private final TeamFactoryRegistry teamFactoryRegistry;
+
+    /**
+     * Registry that contains all {@link TeamFactory} implementations.
+     */
+    private final MatchProgressRegistry matchProgressRegistry;
+
+    /**
+     * Max total of allowed matches to run at once.
+     */
+    @Value("${simulation.maximum-matches}")
+    private Integer MAX_MATCHES;
 
     /**
      * Construct a new {@code SimulationLifecycleManager}.
      *
      * @param registry the {@link ActiveMatchesRegistry} to manage active matches
      */
-    public SimulationLifecycleManager(ActiveMatchesRegistry registry, TeamFactoryRegistry teamFactoryRegistry) {
+    public SimulationLifecycleManager(ActiveMatchesRegistry registry, TeamFactoryRegistry teamFactoryRegistry, MatchProgressRegistry matchProgressRegistry) {
         this.registry = registry;
         this.teamFactoryRegistry = teamFactoryRegistry;
+        this.matchProgressRegistry = matchProgressRegistry;
     }
 
     /**
@@ -57,15 +72,13 @@ public class SimulationLifecycleManager {
      * Invoked automatically by Spring via {@code @PostConstruct}. Creates 5 randomly
      * generated matches and adds them to the {@link ActiveMatchesRegistry} for simulation.
      * <p>
-     * TODO: Extract max match count to application configuration.
      *
      * @see #createRandomMatch()
      * @see ActiveMatchesRegistry#addMatch(SimulationMatchState)
      */
     @PostConstruct
     private void bootStrapMatches() {
-        // todo: add max matches to a config.
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < MAX_MATCHES; i++) {
             SimulationMatchState matchState = createRandomMatch();
             registry.addMatch(matchState);
         }
@@ -86,11 +99,12 @@ public class SimulationLifecycleManager {
 
             // Add the new match to the registry.
             registry.addMatch(newMatchState);
+
+            System.out.println("DEBUGGING: Replacing match with state " + newMatchState.getMatch().id());
         }
     }
 
     /**
-     * TODO - IN PROGRESS
      * Generate a randomly created {@link SimulationMatchState} with random sport and teams.
      *
      * @return a randomly created {@link SimulationMatchState} object, or {@code null} if generation fails
@@ -102,18 +116,17 @@ public class SimulationLifecycleManager {
 
         Sport selectedSport = sports.get(ThreadLocalRandom.current().nextInt(sports.size()));
 
+        // Construct the teams.
         Team teamA = teamFactoryRegistry.getTeamFactory(selectedSport).createTeam();
         Team teamB = teamFactoryRegistry.getTeamFactory(selectedSport).createTeam();
 
+        // Construct the match.
         Match match = new Match(UUID.randomUUID(), selectedSport, teamA, teamB);
 
-        //todo:
-        // - Set time (MatchProgress) based on sport.
-        // this will be a placeholder for now, but will need to be set based on the sport. (e.g. Soccer = 90 minutes, Basketball = 48 minutes, etc.)
-        // This will be done via a "MatchProgress" parent class, then each sport will have it's own class, eg: SoccerMatchProgress, BasketballMatchProgress, etc.
-        // that will extend the parent class and set the time accordingly. This will then be passed to the state.
-        MatchProgress matchProgress = new MatchProgress(60);
+        // Construct the MatchProgress object based on the sport.
+        MatchProgress matchProgress = matchProgressRegistry.getMatchProgressFactory(selectedSport).createMatchProgress();
 
+        // Create a new score (0-0).
         Score score = new Score(List.of(teamA, teamB));
 
         return new SimulationMatchState(match, teamA, matchProgress, score, null);
