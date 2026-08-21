@@ -55,15 +55,34 @@ public class SoccerSimulator implements Simulator {
         UUID eventId = UUID.randomUUID();
 
         EventType eventType = getEventTypes().get(ThreadLocalRandom.current().nextInt(getEventTypes().size()));
+
+        // set the acting team based on rng.
+        Integer actingTeam = ThreadLocalRandom.current().nextInt();
+
+        if (actingTeam % 2 == 0) { // even numbers set to the home team.
+            matchState.setActingTeam(matchState.getMatch().homeTeam());
+        } else {
+            matchState.setActingTeam(matchState.getMatch().awayTeam());
+        }
+
+        // todo: based on shooting/pass/assist, use rng to determine if goal or not
+        //  or determine if way of things are fins as is.
+        //  Also -- match service should be the service maintaining the score, Match Service will have the state there.
+        //  will need to refactor.
+        switch (eventType) {
+            case GOAL, ASSIST -> {
+                System.out.println("GOAL!");
+                matchState.getScore().addPoints(matchState.getActingTeam(), 1);
+                System.out.println("Score is now " + displayScore(matchState));
+            } // Increment home team score by 1
+            default -> {
+                System.out.println(eventType.name());
+            }
+        }
         Instant timestamp = Instant.now();
 
         // todo
         Map<String, Object> payload = generatePayload();
-
-        // todo
-        // need to grab match stat from state, update match.
-        // Matches will be created in the engine, need to grab match bean here
-        // randomly select a match from the current matches, grab that id, set here.
 
 
         return new MatchEvent(eventId, matchState.getMatch().id(), Sport.SOCCER, eventType, timestamp, payload);
@@ -96,9 +115,14 @@ public class SoccerSimulator implements Simulator {
     @Override
     public Map<String, Object> generatePayload() {
         return Map.of(
-                "playerName", "insert_player_name",
+                "eventType", "eventType",
                 "team", "team1",
                 "homeTeam", "team1",
                 "awayTeam", "team2");
+    }
+
+    private String displayScore(SimulationMatchState matchState) {
+        return matchState.getScore().getScore(matchState.getMatch().homeTeam()) + " - " +
+                matchState.getScore().getScore(matchState.getMatch().awayTeam());
     }
 }
