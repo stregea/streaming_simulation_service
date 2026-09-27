@@ -1,9 +1,13 @@
 spring:
   application:
     name: simulation-service
+  kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 simulation:
   maximum-matches: 5
   kafka:
     bootstrap-servers: localhost:9092
-    topic: simulation-topic
+    match-event-topic: match_event

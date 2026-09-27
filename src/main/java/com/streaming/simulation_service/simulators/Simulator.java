@@ -43,7 +43,12 @@ public interface Simulator {
     /**
      * Generate a simulated payload to be inserted within a {@link MatchEvent}.
      *
-     * @return a Map containing sports data.
+     * <p>The payload is derived from the current {@link SimulationMatchState} so each simulated
+     * event can reflect the most recent match context, including the active side, current timing,
+     * or other sport-specific state.</p>
+     *
+     * @param matchState the current {@link SimulationMatchState} used to build the payload.
+     * @return a {@link Map} containing sport-specific event data for the generated match event.
      */
-    Map<String, Object> generatePayload();
+    Map<String, Object> generatePayload(SimulationMatchState matchState);
 }

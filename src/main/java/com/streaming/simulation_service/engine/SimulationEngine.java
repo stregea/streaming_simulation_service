@@ -1,5 +1,6 @@
 package com.streaming.simulation_service.engine;
 
+import com.streaming.simulation_service.kafka.producer.MatchEventProducer;
 import com.streaming.simulation_service.registry.SimulatorRegistry;
 import com.streaming.simulation_service.model.event.MatchEvent;
 import com.streaming.simulation_service.model.state.SimulationMatchState;
@@ -24,13 +25,17 @@ public class SimulationEngine {
      */
     private final SimulatorRegistry simulatorRegistry;
 
+    private final MatchEventProducer matchEventProducer;
+
     /**
      * Construct a new {@code SimulationEngine}.
      *
      * @param simulatorRegistry the {@link SimulatorRegistry} for retrieving sport-specific simulators
+     * @param matchEventProducer the {@link MatchEventProducer} for publishing match events to Kafka
      */
-    public SimulationEngine(SimulatorRegistry simulatorRegistry) {
+    public SimulationEngine(SimulatorRegistry simulatorRegistry, MatchEventProducer matchEventProducer) {
         this.simulatorRegistry = simulatorRegistry;
+        this.matchEventProducer = matchEventProducer;
     }
 
     /**
@@ -43,11 +48,13 @@ public class SimulationEngine {
         // Select the appropriate simulator from the SimulatorRegistry.
         Simulator simulator = simulatorRegistry.getSimulator(match.getMatch().sport());
 
-        // Generate an event
+        // Generate an event.
         MatchEvent event = simulator.generateEvent(match);
 
+        // Advance the match clock.
         match.advanceClock(event);
 
-        // todo: publish event to kafka
+        // Publish the event to Kafka.
+        matchEventProducer.publishMatchEvent(event);
     }
 }

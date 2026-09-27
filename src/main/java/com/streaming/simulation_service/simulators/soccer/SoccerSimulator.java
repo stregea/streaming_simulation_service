@@ -51,7 +51,7 @@ public class SoccerSimulator implements Simulator {
      * @return a {@link MatchEvent} containing the generated soccer event data.
      */
     @Override
-    public MatchEvent generateEvent(SimulationMatchState matchState) { // todo: should we pass the matchId in?
+    public MatchEvent generateEvent(SimulationMatchState matchState) {
         UUID eventId = UUID.randomUUID();
 
         EventType eventType = getEventTypes().get(ThreadLocalRandom.current().nextInt(getEventTypes().size()));
@@ -66,24 +66,23 @@ public class SoccerSimulator implements Simulator {
         }
 
         // todo: based on shooting/pass/assist, use rng to determine if goal or not
-        //  or determine if way of things are fins as is.
         //  Also -- match service should be the service maintaining the score, Match Service will have the state there.
         //  will need to refactor.
         switch (eventType) {
             case GOAL, ASSIST -> {
                 System.out.println("GOAL!");
+
+                // Increment active team score by 1.
                 matchState.getScore().addPoints(matchState.getActingTeam(), 1);
+
                 System.out.println("Score is now " + displayScore(matchState));
-            } // Increment home team score by 1
-            default -> {
-                System.out.println(eventType.name());
             }
+            default -> System.out.println(eventType.name());
         }
+
         Instant timestamp = Instant.now();
 
-        // todo
-        Map<String, Object> payload = generatePayload();
-
+        Map<String, Object> payload = generatePayload(matchState);
 
         return new MatchEvent(eventId, matchState.getMatch().id(), Sport.SOCCER, eventType, timestamp, payload);
     }
@@ -113,12 +112,11 @@ public class SoccerSimulator implements Simulator {
      * @return a {@link Map} with placeholder player and team data.
      */
     @Override
-    public Map<String, Object> generatePayload() {
+    public Map<String, Object> generatePayload(SimulationMatchState matchState) {
         return Map.of(
-                "eventType", "eventType",
-                "team", "team1",
-                "homeTeam", "team1",
-                "awayTeam", "team2");
+                "team", matchState.getActingTeam().name(),
+                "homeTeam", matchState.getMatch().homeTeam().name(),
+                "awayTeam", matchState.getMatch().awayTeam().name());
     }
 
     private String displayScore(SimulationMatchState matchState) {
