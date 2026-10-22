@@ -1,2 +1,2 @@
-gpr.user=your_github_username_here
-gpr.token=your_token_here
+githubPackagesUsername=YOUR_GITHUB_USERNAME
+githubPackagesToken=YOUR_GITHUB_TOKEN
