@@ -15,9 +15,26 @@ java {
 
 repositories {
 	mavenCentral()
+
+	// GitHub Packages repository for streaming-library
+	maven {
+		url = uri(
+			"https://maven.pkg.github.com/stregea/streaming_library"
+		)
+		credentials {
+			username = project.findProperty("githubPackagesUsername") as String?
+				?: System.getenv("USERNAME")
+
+			password = project.findProperty("githubPackagesToken") as String?
+				?: System.getenv("TOKEN")
+		}
+	}
 }
 
 dependencies {
+
+	implementation("com.streaming:streaming-library:0.1.0")
+
 	implementation("org.springframework.boot:spring-boot-starter-kafka")
 	implementation("org.springframework.boot:spring-boot-starter-webmvc")
 	// Allows for serializing objects.
