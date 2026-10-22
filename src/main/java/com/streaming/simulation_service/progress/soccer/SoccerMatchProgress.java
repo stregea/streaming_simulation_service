@@ -1,9 +1,9 @@
-package com.streaming.simulation_service.model.progress.soccer;
+package com.streaming.simulation_service.progress.soccer;
 
-import com.streaming.simulation_service.model.enums.Sport;
-import com.streaming.simulation_service.model.event.MatchEvent;
-import com.streaming.simulation_service.model.match.MatchClock;
-import com.streaming.simulation_service.model.progress.MatchProgress;
+import com.streaming.library.enums.Sport;
+import com.streaming.library.model.record.event.MatchEvent;
+import com.streaming.library.model.MatchClock;
+import com.streaming.simulation_service.progress.MatchProgress;
 
 import java.time.Duration;
 import java.time.Instant;

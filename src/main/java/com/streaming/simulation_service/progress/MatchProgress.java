@@ -1,7 +1,7 @@
-package com.streaming.simulation_service.model.progress;
+package com.streaming.simulation_service.progress;
 
-import com.streaming.simulation_service.model.enums.Sport;
-import com.streaming.simulation_service.model.event.MatchEvent;
+import com.streaming.library.enums.Sport;
+import com.streaming.library.model.record.event.MatchEvent;
 
 /**
  * Defines the contract for tracking the progression and state of a simulated match.

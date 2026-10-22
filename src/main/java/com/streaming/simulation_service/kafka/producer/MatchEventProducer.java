@@ -1,6 +1,6 @@
 package com.streaming.simulation_service.kafka.producer;
 
-import com.streaming.simulation_service.model.event.MatchEvent;
+import com.streaming.library.model.record.event.MatchEvent;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;

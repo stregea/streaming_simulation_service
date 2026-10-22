@@ -1,11 +1,11 @@
 package com.streaming.simulation_service.factory.team.soccer;
 
 import com.streaming.simulation_service.factory.team.TeamFactory;
-import com.streaming.simulation_service.model.enums.Sport;
-import com.streaming.simulation_service.model.enums.position.Position;
-import com.streaming.simulation_service.model.enums.position.soccer.SoccerPosition;
-import com.streaming.simulation_service.model.team.Player;
-import com.streaming.simulation_service.model.team.Team;
+import com.streaming.library.enums.Sport;
+import com.streaming.library.enums.position.Position;
+import com.streaming.library.enums.position.soccer.SoccerPosition;
+import com.streaming.library.model.record.Player;
+import com.streaming.library.model.record.Team;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

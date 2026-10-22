@@ -1,6 +1,6 @@
 package com.streaming.simulation_service.engine;
 
-import com.streaming.simulation_service.model.state.SimulationMatchState;
+import com.streaming.simulation_service.state.SimulationMatchState;
 import com.streaming.simulation_service.registry.ActiveMatchesRegistry;
 import org.springframework.stereotype.Component;
 

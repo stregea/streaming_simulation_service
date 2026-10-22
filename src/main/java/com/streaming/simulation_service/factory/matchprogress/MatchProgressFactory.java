@@ -1,7 +1,7 @@
 package com.streaming.simulation_service.factory.matchprogress;
 
-import com.streaming.simulation_service.model.enums.Sport;
-import com.streaming.simulation_service.model.progress.MatchProgress;
+import com.streaming.library.enums.Sport;
+import com.streaming.simulation_service.progress.MatchProgress;
 
 /**
  * Factory responsible for constructing {@link MatchProgress} instances for simulated matches.

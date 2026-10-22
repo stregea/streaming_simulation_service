@@ -1,10 +1,10 @@
-package com.streaming.simulation_service.model.state;
+package com.streaming.simulation_service.state;
 
-import com.streaming.simulation_service.model.event.MatchEvent;
-import com.streaming.simulation_service.model.match.Match;
-import com.streaming.simulation_service.model.match.Score;
-import com.streaming.simulation_service.model.progress.MatchProgress;
-import com.streaming.simulation_service.model.team.Team;
+import com.streaming.library.model.record.event.MatchEvent;
+import com.streaming.library.model.record.Match;
+import com.streaming.library.model.Score;
+import com.streaming.simulation_service.progress.MatchProgress;
+import com.streaming.library.model.record.Team;
 
 import java.time.Instant;
 

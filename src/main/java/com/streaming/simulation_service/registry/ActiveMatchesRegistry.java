@@ -1,7 +1,7 @@
 package com.streaming.simulation_service.registry;
 
-import com.streaming.simulation_service.model.match.Match;
-import com.streaming.simulation_service.model.state.SimulationMatchState;
+import com.streaming.library.model.record.Match;
+import com.streaming.simulation_service.state.SimulationMatchState;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

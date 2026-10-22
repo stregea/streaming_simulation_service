@@ -1,9 +1,9 @@
 package com.streaming.simulation_service.factory.team;
 
-import com.streaming.simulation_service.model.enums.Sport;
-import com.streaming.simulation_service.model.enums.position.Position;
-import com.streaming.simulation_service.model.team.Player;
-import com.streaming.simulation_service.model.team.Team;
+import com.streaming.library.enums.Sport;
+import com.streaming.library.enums.position.Position;
+import com.streaming.library.model.record.Player;
+import com.streaming.library.model.record.Team;
 
 /**
  * Factory responsible for constructing {@link Team} instances for simulated matches.

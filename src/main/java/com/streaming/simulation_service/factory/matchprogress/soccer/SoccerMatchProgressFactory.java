@@ -1,9 +1,9 @@
 package com.streaming.simulation_service.factory.matchprogress.soccer;
 
 import com.streaming.simulation_service.factory.matchprogress.MatchProgressFactory;
-import com.streaming.simulation_service.model.enums.Sport;
-import com.streaming.simulation_service.model.progress.MatchProgress;
-import com.streaming.simulation_service.model.progress.soccer.SoccerMatchProgress;
+import com.streaming.library.enums.Sport;
+import com.streaming.simulation_service.progress.MatchProgress;
+import com.streaming.simulation_service.progress.soccer.SoccerMatchProgress;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;

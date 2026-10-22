@@ -1,12 +1,12 @@
 package com.streaming.simulation_service.engine;
 
 import com.streaming.simulation_service.factory.team.TeamFactory;
-import com.streaming.simulation_service.model.enums.Sport;
-import com.streaming.simulation_service.model.match.Match;
-import com.streaming.simulation_service.model.match.Score;
-import com.streaming.simulation_service.model.progress.MatchProgress;
-import com.streaming.simulation_service.model.team.Team;
-import com.streaming.simulation_service.model.state.SimulationMatchState;
+import com.streaming.library.enums.Sport;
+import com.streaming.library.model.record.Match;
+import com.streaming.library.model.Score;
+import com.streaming.simulation_service.progress.MatchProgress;
+import com.streaming.library.model.record.Team;
+import com.streaming.simulation_service.state.SimulationMatchState;
 import com.streaming.simulation_service.registry.ActiveMatchesRegistry;
 import com.streaming.simulation_service.registry.MatchProgressRegistry;
 import com.streaming.simulation_service.registry.TeamFactoryRegistry;

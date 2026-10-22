@@ -2,8 +2,8 @@ package com.streaming.simulation_service.engine;
 
 import com.streaming.simulation_service.kafka.producer.MatchEventProducer;
 import com.streaming.simulation_service.registry.SimulatorRegistry;
-import com.streaming.simulation_service.model.event.MatchEvent;
-import com.streaming.simulation_service.model.state.SimulationMatchState;
+import com.streaming.library.model.record.event.MatchEvent;
+import com.streaming.simulation_service.state.SimulationMatchState;
 import com.streaming.simulation_service.simulators.Simulator;
 import org.springframework.stereotype.Component;
 

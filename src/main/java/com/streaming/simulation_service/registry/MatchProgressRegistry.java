@@ -1,7 +1,7 @@
 package com.streaming.simulation_service.registry;
 
 import com.streaming.simulation_service.factory.matchprogress.MatchProgressFactory;
-import com.streaming.simulation_service.model.enums.Sport;
+import com.streaming.library.enums.Sport;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
