@@ -22,11 +22,9 @@ repositories {
 			"https://maven.pkg.github.com/stregea/streaming_library"
 		)
 		credentials {
-			username = project.findProperty("githubPackagesUsername") as String?
-				?: System.getenv("USERNAME")
+			username = System.getenv("USERNAME")
 
-			password = project.findProperty("githubPackagesToken") as String?
-				?: System.getenv("TOKEN")
+			password = System.getenv("TOKEN")
 		}
 	}
 }
